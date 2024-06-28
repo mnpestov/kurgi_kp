@@ -12,7 +12,7 @@ function Header() {
     const [managerTel, setManagerTel] = useState('+7 925 516-31-16')
     const [kpNumber, setKpNumber] = useState()
     const [kpDate, setKpDate] = useState(date)
-    const [contractNumber,setContractNumber] = useState()
+    const [contractNumber, setContractNumber] = useState()
     const [contractDate, setContractDate] = useState()
 
     const handleChangeKpNumber = ({ target: { value } }) => {
