@@ -31,13 +31,14 @@ p {
     flex-direction: column;
     padding: calc(0.03*60vw) calc(0.038*60vw);
     box-sizing: border-box;
-    justify-content: space-between;
+
     margin-top: 20px;
     box-sizing: border-box;
 }
 
 .list:first-child {
     margin-top: 0;
+    justify-content: space-between;
     /* padding: 0 88px 109px; */
 }
 
@@ -126,31 +127,18 @@ p {
 
 }
 
-.list__logo {
-    width: calc(0.6*19.12vw);
-    margin: 19px 0 0 42px;
-}
-
-.list__title {
-    margin: 6px 39px 2px;
-    padding: 0;
-    font-family: 'arial';
-    font-size: 40px;
-    letter-spacing: 1px;
-}
-
 .list__subtitle-container {
     margin: 0 38px;
 }
 
-.list__subtitle {
+/* .list__subtitle {
     margin: 0;
     padding: 0;
     font-family: arial;
     font-size: 25px;
     font-style: italic;
     letter-spacing: -0.35px;
-}
+} */
 
 .list__subtitle_place {
     letter-spacing: -0.2px;

@@ -1,0 +1,36 @@
+.list__logo {
+    width: calc(0.6*19.12vw);
+    margin-left: 3px;
+}
+
+.list__title {
+    margin: 0;
+    padding: 0;
+    font-family: 'arial';
+    font-size: calc(0.028*60vw);
+    letter-spacing: 1px;
+}
+
+.list__table {
+
+}
+
+.list__subtitle-container {
+    font-family: arial;
+    font-weight: 400;
+    font-size: calc(0.0165* 60vw);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin: 0;
+}
+
+.table__column {
+    font-family: arial;
+    font-weight: 400;
+    font-size: calc(0.0188* 60vw);
+}
+
+.table__title {
+    
+}
