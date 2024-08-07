@@ -30,8 +30,7 @@ p {
     display: flex;
     flex-direction: column;
     padding: calc(0.03*60vw) calc(0.038*60vw);
-    box-sizing: border-box;
-
+    justify-content: space-between;
     margin-top: 20px;
     box-sizing: border-box;
 }

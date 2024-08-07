@@ -14,7 +14,9 @@ function Form({
     handleChangeStartEvent,
     handleChangeEndEvent,
     handleChangeEventPlace,
-    handleChangeCountOfPerson
+    handleChangeCountOfPerson,
+    handleChangeLogisticsCost,
+    handleChangeCashlessPayments
 }) {
 
 
@@ -37,6 +39,12 @@ function Form({
             <input className="input" type="text" placeholder="Место проведения" name="Place" onChange={handleChangeEventPlace}></input>
             <label className="label">Количество персон</label>
             <input className="input" type="text" placeholder="Количество персон" name="Person" onChange={handleChangeCountOfPerson}></input>
+            <p> Лист 2 </p>
+            <p> Итого </p>
+            <label className="label">Стоимость логистики </label>
+            <input className="input" type="text" placeholder="Стоимость логистики" name="Logistic" onChange={handleChangeLogisticsCost}></input>
+            <label className="label">Итого по безналичному расчёту</label>
+            <input className="input" type="text" placeholder="Итого по безналичному расчёту" name="CashlessPayments" onChange={handleChangeCashlessPayments}></input>
             <button onClick={downloadPDF}>Download PDF</button>
         </div>
     );
