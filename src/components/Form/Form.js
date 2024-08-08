@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './Form.css';
+import FormRow from '../FormRow/FormRow'
 import logo from '../../images/logo.png'
 import managerPhoto from '../../images/managerPhoto.png'
 import html2canvas from 'html2canvas';
@@ -19,9 +20,34 @@ function Form({
     handleChangeCashlessPayments
 }) {
 
+    const [countOfRow, setCountOfRow] = useState([
+        {
+            product: '',
+            composition: '',
+            weight: '',
+            count: '',
+            price: '',
+            totalCost: '',
+        }])
+    const emptyRow = {
+        product: '',
+        composition: '',
+        weight: '',
+        count: '',
+        price: '',
+        totalCost: '',
+    }
+
+    const handleAddRow = () => {
+        console.log('add');
+        setCountOfRow([...countOfRow, emptyRow])
+        console.log(countOfRow);
+    }
 
     return (
         <div className="form">
+            {/* реквизиты КП */}
+            <h2>Реквизиты КП</h2>
             <label className="label">№ КП</label>
             <input className="input" type="text" placeholder="KP number" name="KpNumber" onChange={handleChangeKpNumber}></input>
             <label className="label">дата КП</label>
@@ -30,7 +56,10 @@ function Form({
             <input className="input" type="text" placeholder="Contract number" name="ContractNumber" onChange={handleChangeContractNumber}></input>
             <label className="label">дата договора</label>
             <input className="input" type="date" placeholder="Contract Date" name="ContractDate" min="2000-01-01" max="2030-12-31" onChange={handleChangeContractDate}></input>
-            <p> Лист 1</p>
+            {/* реквизиты КП */}
+
+            {/* Общая информация по мероприятию */}
+            <h2>Общая информация по мероприятию</h2>
             <label className="label">Дата начала мероприятия</label>
             <input className="input" type="datetime-local" name="StartEvent" min="2000-01-01T00:00" max="2030-12-31T23:59" onChange={handleChangeStartEvent}></input>
             <label className="label">Дата окончания мероприятия</label>
@@ -39,12 +68,30 @@ function Form({
             <input className="input" type="text" placeholder="Место проведения" name="Place" onChange={handleChangeEventPlace}></input>
             <label className="label">Количество персон</label>
             <input className="input" type="text" placeholder="Количество персон" name="Person" onChange={handleChangeCountOfPerson}></input>
-            <p> Лист 2 </p>
+            {/* Общая информация по мероприятию */}
+
+            {/* Товары */}
+            <h2>Товары</h2>
+            <p> Лист 1</p>
+            <label className="label">Наименование товара</label>
+            <input className="input" type="text" placeholder="Наименование товара" name="Product"></input>
+            <label className="label">Описание/состав товара</label>
+            <input className="input" type="text" placeholder="Описание/состав товара" name="Composition"></input>
+            <label className="label">Вес товара</label>
+            <input className="input" type="text" placeholder="Вес товара" name="ProductWeight"></input>
+            <label className="label">Количество товара</label>
+            <input className="input" type="text" placeholder="Количество товара" name="ProductCount"></input>
+            <label className="label">Стоимость товара</label>
+            <input className="input" type="text" placeholder="Стоимость товара" name="ProductPrice"></input>
+            <button onClick={handleAddRow}>Добавить товар</button>
             <p> Итого </p>
             <label className="label">Стоимость логистики </label>
             <input className="input" type="text" placeholder="Стоимость логистики" name="Logistic" onChange={handleChangeLogisticsCost}></input>
             <label className="label">Итого по безналичному расчёту</label>
             <input className="input" type="text" placeholder="Итого по безналичному расчёту" name="CashlessPayments" onChange={handleChangeCashlessPayments}></input>
+
+            <p> Лист 2 </p>
+            {countOfRow.map((item, index) => (<FormRow key={index} />))}
             <button onClick={downloadPDF}>Download PDF</button>
         </div>
     );

@@ -115,11 +115,14 @@ function App() {
     captureArr.forEach((item, index, arr) => {
       html2canvas(item).then((canvas) => {
         const imgData = canvas.toDataURL('img/png');
-        const componentWidth = doc.internal.pageSize.getWidth();
-        const componentHeight = doc.internal.pageSize.getHeight();
+        // const componentWidth = doc.internal.pageSize.getWidth();
+        // const componentHeight = doc.internal.pageSize.getHeight();
+        const componentWidth = 297;
+        const componentHeight = 210;
         console.log(index);
         if (index === 0) {
           doc.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight);
+          console.log(componentWidth, componentHeight);
         } else {
           doc.addPage('a4', 'l');
           doc.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight);
