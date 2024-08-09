@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import './Kp.css';
 import logo from '../../images/logo.png'
 import Row from '../Row/Row'
-import { rows } from '../../utils/const'
+// import { rows } from '../../utils/const'
 
-function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerson, logisticsCost, cashlessPayments }) {
+function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerson, logisticsCost, rows }) {
 
     function GetPrice(price) {
         price += "";
@@ -39,7 +39,7 @@ function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerso
                             Цена, руб
                         </th>
                     </tr>
-                    {rows.map((item, index) => (<Row key={index} data={item} />))}
+                    {rows.map((item, index) => (<Row key={index} data={item} index={index} />))}
                 </table>
             </div>
             <div className="table__subtitle">

@@ -17,32 +17,38 @@ function Form({
     handleChangeEventPlace,
     handleChangeCountOfPerson,
     handleChangeLogisticsCost,
-    handleChangeCashlessPayments
+    handleChangeCashlessPayments,
+    // handleChangeProductPrice,
+    // handleChangeProductCount,
+    // handleChangeProduct,
+    // handleChangeWeightProduct,
+    // handleChangeCompositionProduct,
+    addRowInPdf,
 }) {
 
-    const [countOfRow, setCountOfRow] = useState([
-        {
-            product: '',
-            composition: '',
-            weight: '',
-            count: '',
-            price: '',
-            totalCost: '',
-        }])
-    const emptyRow = {
-        product: '',
-        composition: '',
-        weight: '',
-        count: '',
-        price: '',
-        totalCost: '',
-    }
+    // const [countOfRow, setCountOfRow] = useState([
+    //     {
+    //         product: '',
+    //         composition: '',
+    //         weight: '',
+    //         count: '',
+    //         price: '',
+    //         totalCost: '',
+    //     }])
+    // const emptyRow = {
+    //     product: '',
+    //     composition: '',
+    //     weight: '',
+    //     count: '',
+    //     price: '',
+    //     totalCost: '',
+    // }
 
-    const handleAddRow = () => {
-        console.log('add');
-        setCountOfRow([...countOfRow, emptyRow])
-        console.log(countOfRow);
-    }
+    // const handleAddRow = () => {
+    //     console.log('add');
+    //     setCountOfRow([...countOfRow, emptyRow])
+    //     console.log(countOfRow);
+    // }
 
     return (
         <div className="form">
@@ -73,25 +79,27 @@ function Form({
             {/* Товары */}
             <h2>Товары</h2>
             <p> Лист 1</p>
-            <label className="label">Наименование товара</label>
-            <input className="input" type="text" placeholder="Наименование товара" name="Product"></input>
-            <label className="label">Описание/состав товара</label>
-            <input className="input" type="text" placeholder="Описание/состав товара" name="Composition"></input>
-            <label className="label">Вес товара</label>
-            <input className="input" type="text" placeholder="Вес товара" name="ProductWeight"></input>
-            <label className="label">Количество товара</label>
-            <input className="input" type="text" placeholder="Количество товара" name="ProductCount"></input>
-            <label className="label">Стоимость товара</label>
-            <input className="input" type="text" placeholder="Стоимость товара" name="ProductPrice"></input>
-            <button onClick={handleAddRow}>Добавить товар</button>
+            {/* {countOfRow.map((item, index) => ( */}
+            <FormRow 
+            // key={index} 
+            // handleChangeProductCount={handleChangeProductCount} 
+            // handleChangeProductPrice={handleChangeProductPrice} 
+            // handleChangeWeightProduct={handleChangeWeightProduct} 
+            // handleChangeCompositionProduct={handleChangeCompositionProduct}
+            // handleChangeProduct={handleChangeProduct}
+            addRowInPdf={addRowInPdf} />
+            {/* ))} */}
+
+            {/* <button onClick={handleAddRow}>Добавить товар</button> */}
             <p> Итого </p>
             <label className="label">Стоимость логистики </label>
             <input className="input" type="text" placeholder="Стоимость логистики" name="Logistic" onChange={handleChangeLogisticsCost}></input>
             <label className="label">Итого по безналичному расчёту</label>
             <input className="input" type="text" placeholder="Итого по безналичному расчёту" name="CashlessPayments" onChange={handleChangeCashlessPayments}></input>
 
-            <p> Лист 2 </p>
-            {countOfRow.map((item, index) => (<FormRow key={index} />))}
+            {/* <p> Лист 2 </p> */}
+            
+            {/* <button onClick={showRows}>showRows</button> */}
             <button onClick={downloadPDF}>Download PDF</button>
         </div>
     );

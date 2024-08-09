@@ -34,12 +34,26 @@ function App() {
   const [eventPlace, setEventPlace] = useState("МО Тюллип инн Софрино")
   const [countOfPerson, setCountOfPerson] = useState("600")
   const [logisticsCost, setLogisticsCost] = useState("10000")
-  const [cashlessPayments, setCashlessPayments] = useState("0")
-  
+  // const [cashlessPayments, setCashlessPayments] = useState("0")
+  // const [productCount, setProductCount] = useState(0)
+  // const [productPrice, setProductPrice] = useState(0)
+  // const [product, setProduct] = useState(0)
+  // const [compositionProduct, setCompositionProduct] = useState(0)
+  // const [weightProduct, setWeightProduct] = useState(0)
+  const [rows, setRows] = useState([])
 
   const handleChangeKpNumber = ({ target: { value } }) => {
     setKpNumber(value)
   }
+  // const handleChangeProduct = ( value ) => {
+  //   setProduct(value)
+  // }
+  // const handleChangeWeightProduct = ( value ) => {
+  //   setWeightProduct(value)
+  // }
+  // const handleChangeCompositionProduct = ( value ) => {
+  //   setCompositionProduct(value)
+  // }
   const handleChangeKpDate = ({ target: { value } }) => {
     const enteredDate = new Date(value)
     setKpDate(enteredDate.toLocaleDateString('ru-RU', {
@@ -104,9 +118,15 @@ function App() {
   const handleChangeLogisticsCost = ({ target: { value } }) => {
     setLogisticsCost(value)
   }
-  const handleChangeCashlessPayments = ({ target: { value } }) => {
-    setCashlessPayments(value)
-  }
+  // const handleChangeCashlessPayments = ({ target: { value } }) => {
+  //   setCashlessPayments(value)
+  // }
+  // const handleChangeProductCount = (value) => {
+  //   setProductCount(value)
+  // }
+  // const handleChangeProductPrice = (value) => {
+  //   setProductPrice(value)
+  // }
 
   const downloadPDF = () => {
     const captureArr = document.querySelectorAll('.list');
@@ -134,6 +154,10 @@ function App() {
     })
   }
 
+  const addRowInPdf = (newObj) => {
+    setRows([...rows,newObj])
+  }
+
   return (
     <div className='page'>
       <Form
@@ -147,7 +171,13 @@ function App() {
         handleChangeEventPlace={handleChangeEventPlace}
         handleChangeCountOfPerson={handleChangeCountOfPerson}
         handleChangeLogisticsCost={handleChangeLogisticsCost}
-        handleChangeCashlessPayments={handleChangeCashlessPayments}
+        // handleChangeCashlessPayments={handleChangeCashlessPayments}
+        // handleChangeProductCount={handleChangeProductCount}
+        // handleChangeProductPrice={handleChangeProductPrice}
+        // handleChangeProduct={handleChangeProduct}
+        // handleChangeWeightProduct={handleChangeWeightProduct}
+        // handleChangeCompositionProduct={handleChangeCompositionProduct}
+        addRowInPdf={addRowInPdf}
       />
       <div className="preview">
         <Header
@@ -168,7 +198,13 @@ function App() {
           eventPlace={eventPlace}
           countOfPerson={countOfPerson}
           logisticsCost={logisticsCost}
-          cashlessPayments={cashlessPayments}
+          // cashlessPayments={cashlessPayments}
+          // productCount={productCount}
+          // productPrice={productPrice}
+          // product={product}
+          // compositionProduct={compositionProduct}
+          // weightProduct={weightProduct}
+          rows={rows}
         />
         {/* <Footer /> */}
       </div>
