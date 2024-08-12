@@ -58,24 +58,24 @@ function FormRow({
         <form id="form" className="form__row">
             <div>
                 <label className="label">Наименование товара
-                    <input className="input" type="text" placeholder="Наименование товара" name="product" onChange={changeProduct}></input>
+                    <input className="input" type="text" placeholder="Наименование товара" name="product" onChange={changeProduct} autoComplete="off"></input>
                 </label>
                 <label className="label">Описание/состав товара
-                    <input className="input" type="text" placeholder="Описание/состав товара" name="composition" onChange={changeCompositionProduct}></input>
+                    <input className="input" type="text" placeholder="Описание/состав товара" name="composition" onChange={changeCompositionProduct} autoComplete="off"></input>
                 </label>
                 <label className="label">Вес товара
-                    <input className="input" type="text" placeholder="Вес товара" name="productWeight" onChange={changeProductWeight}></input>
+                    <input className="input" type="text" placeholder="Вес товара" name="productWeight" onChange={changeProductWeight} autoComplete="off"></input>
                 </label>
             </div>
             <div>
                 <label className="label">Количество товара
-                    <input className="input" type="text" placeholder="Количество товара" name="productCount" onChange={changeProductCount}></input>
+                    <input className="input" type="text" placeholder="Количество товара" name="productCount" onChange={changeProductCount} autoComplete="off"></input>
                 </label>
                 <label className="label">Стоимость товара
-                    <input className="input" type="text" placeholder="Стоимость товара" name="productPrice" onChange={changeProductPrice}></input>
+                    <input className="input" type="text" placeholder="Стоимость товара" name="productPrice" onChange={changeProductPrice} autoComplete="off"></input>
                 </label>
                 <label className="label">Цена
-                    <input className="input" type="text" placeholder="Цена" name="total" value={parseInt(count) * parseInt(price)} disabled={true}></input>
+                    <input className="input" type="text" placeholder="Цена" name="total" value={parseInt(count) * parseInt(price)} disabled={true} autoComplete="off"></input>
                 </label>
             </div>
             <button type="button" onClick={addRow}>Save</button>

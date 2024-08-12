@@ -1,5 +1,29 @@
+.table__row-container {
+    position: relative;
+}
+
+.table__row-button {
+    position: absolute;
+    left: -28px;
+    min-width: 20px;
+    min-height: 20px;
+    /* visibility: hidden; */
+}
+
+.row-button {
+    display: none;
+}
+
+.table__row-button:hover .row-button {
+    /* visibility: visible; */
+    display: block;
+}
+
 .row_count {
     /* border-bottom: 1px solid black; */
     width: 100%;
     text-align: end;
+    font-family: arial;
+    font-weight: 400;
+    font-size: calc(0.0188* 60vw);
 }

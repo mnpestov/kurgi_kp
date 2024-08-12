@@ -55,7 +55,9 @@
 }
 
 .table__title {
+    font-family: arial;
     font-weight: 400;
+    font-size: calc(0.0188* 60vw);
 }
 
 .table__line-container {

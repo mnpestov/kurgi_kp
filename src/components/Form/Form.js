@@ -17,7 +17,6 @@ function Form({
     handleChangeEventPlace,
     handleChangeCountOfPerson,
     handleChangeLogisticsCost,
-    handleChangeCashlessPayments,
     // handleChangeProductPrice,
     // handleChangeProductCount,
     // handleChangeProduct,
@@ -53,7 +52,7 @@ function Form({
     return (
         <div className="form">
             {/* реквизиты КП */}
-            <h2>Реквизиты КП</h2>
+            <h2 className="form__title">Реквизиты КП</h2>
             <label className="label">№ КП</label>
             <input className="input" type="text" placeholder="KP number" name="KpNumber" onChange={handleChangeKpNumber}></input>
             <label className="label">дата КП</label>
@@ -65,7 +64,7 @@ function Form({
             {/* реквизиты КП */}
 
             {/* Общая информация по мероприятию */}
-            <h2>Общая информация по мероприятию</h2>
+            <h2 className="form__title">Общая информация по мероприятию</h2>
             <label className="label">Дата начала мероприятия</label>
             <input className="input" type="datetime-local" name="StartEvent" min="2000-01-01T00:00" max="2030-12-31T23:59" onChange={handleChangeStartEvent}></input>
             <label className="label">Дата окончания мероприятия</label>
@@ -77,7 +76,7 @@ function Form({
             {/* Общая информация по мероприятию */}
 
             {/* Товары */}
-            <h2>Товары</h2>
+            <h2 className="form__title">Товары</h2>
             <p> Лист 1</p>
             {/* {countOfRow.map((item, index) => ( */}
             <FormRow 
@@ -92,10 +91,14 @@ function Form({
 
             {/* <button onClick={handleAddRow}>Добавить товар</button> */}
             <p> Итого </p>
+            <label className="label">Сумма</label>
+            <input className="input" type="text" placeholder="Сумма" name="sum" disabled={true}></input>
             <label className="label">Стоимость логистики </label>
             <input className="input" type="text" placeholder="Стоимость логистики" name="Logistic" onChange={handleChangeLogisticsCost}></input>
+            <label className="label">Итоговая сумма</label>
+            <input className="input" type="text" placeholder="Итоговая сумма" name="totalCost" disabled={true}></input>
             <label className="label">Итого по безналичному расчёту</label>
-            <input className="input" type="text" placeholder="Итого по безналичному расчёту" name="CashlessPayments" onChange={handleChangeCashlessPayments}></input>
+            <input className="input" type="text" placeholder="Итого по безналичному расчёту" name="CashlessPayments" disabled={true}></input>
 
             {/* <p> Лист 2 </p> */}
             

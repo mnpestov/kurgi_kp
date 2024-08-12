@@ -1,7 +1,7 @@
 import React from "react";
 import './Row.css';
 
-function Row({ data }, index) {
+function Row({ data, index }) {
     const { countOfProduct, priceOfProduct, product, compositionOfProduct, productWeight } = data
     const totalCostOfProduct = countOfProduct * priceOfProduct
 
@@ -12,14 +12,15 @@ function Row({ data }, index) {
     }
 
     function deleteRow() {
-        console.log(index);
-        // let row = document.getElementById(`table__row_${index}`)
-        // row.remove()
+        let row = document.getElementById(`table__row_${index}`)
+        row.remove()
     }
 
     return (
-        <div id={`table__row_${index}`}>
-            <button type="button" onClick={deleteRow}>x</button>
+        <div id={`table__row_${index}`} className="table__row-container">
+            <div className="table__row-button">
+                <button type="button" className="row-button" onClick={deleteRow}>x</button>
+            </div>
             <tr className="table__row">
                 <td className="table__line-container">
                     <p className="table__line tabel__line_product">{`${product} `}

@@ -34,7 +34,6 @@ function App() {
   const [eventPlace, setEventPlace] = useState("МО Тюллип инн Софрино")
   const [countOfPerson, setCountOfPerson] = useState("600")
   const [logisticsCost, setLogisticsCost] = useState("10000")
-  // const [cashlessPayments, setCashlessPayments] = useState("0")
   // const [productCount, setProductCount] = useState(0)
   // const [productPrice, setProductPrice] = useState(0)
   // const [product, setProduct] = useState(0)
@@ -118,9 +117,6 @@ function App() {
   const handleChangeLogisticsCost = ({ target: { value } }) => {
     setLogisticsCost(value)
   }
-  // const handleChangeCashlessPayments = ({ target: { value } }) => {
-  //   setCashlessPayments(value)
-  // }
   // const handleChangeProductCount = (value) => {
   //   setProductCount(value)
   // }
@@ -171,7 +167,6 @@ function App() {
         handleChangeEventPlace={handleChangeEventPlace}
         handleChangeCountOfPerson={handleChangeCountOfPerson}
         handleChangeLogisticsCost={handleChangeLogisticsCost}
-        // handleChangeCashlessPayments={handleChangeCashlessPayments}
         // handleChangeProductCount={handleChangeProductCount}
         // handleChangeProductPrice={handleChangeProductPrice}
         // handleChangeProduct={handleChangeProduct}
