@@ -1,10 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import './Form.css';
 import FormRow from '../FormRow/FormRow'
-import logo from '../../images/logo.png'
-import managerPhoto from '../../images/managerPhoto.png'
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 
 function Form({
     downloadPDF,
@@ -17,37 +13,9 @@ function Form({
     handleChangeEventPlace,
     handleChangeCountOfPerson,
     handleChangeLogisticsCost,
-    // handleChangeProductPrice,
-    // handleChangeProductCount,
-    // handleChangeProduct,
-    // handleChangeWeightProduct,
-    // handleChangeCompositionProduct,
     addRowInPdf,
+    addList,
 }) {
-
-    // const [countOfRow, setCountOfRow] = useState([
-    //     {
-    //         product: '',
-    //         composition: '',
-    //         weight: '',
-    //         count: '',
-    //         price: '',
-    //         totalCost: '',
-    //     }])
-    // const emptyRow = {
-    //     product: '',
-    //     composition: '',
-    //     weight: '',
-    //     count: '',
-    //     price: '',
-    //     totalCost: '',
-    // }
-
-    // const handleAddRow = () => {
-    //     console.log('add');
-    //     setCountOfRow([...countOfRow, emptyRow])
-    //     console.log(countOfRow);
-    // }
 
     return (
         <div className="form">
@@ -78,31 +46,34 @@ function Form({
             {/* Товары */}
             <h2 className="form__title">Товары</h2>
             <p> Лист 1</p>
-            {/* {countOfRow.map((item, index) => ( */}
-            <FormRow 
-            // key={index} 
-            // handleChangeProductCount={handleChangeProductCount} 
-            // handleChangeProductPrice={handleChangeProductPrice} 
-            // handleChangeWeightProduct={handleChangeWeightProduct} 
-            // handleChangeCompositionProduct={handleChangeCompositionProduct}
-            // handleChangeProduct={handleChangeProduct}
-            addRowInPdf={addRowInPdf} />
-            {/* ))} */}
-
-            {/* <button onClick={handleAddRow}>Добавить товар</button> */}
+            <FormRow
+                addRowInPdf={addRowInPdf} />
             <p> Итого </p>
             <label className="label">Сумма</label>
             <input className="input" type="text" placeholder="Сумма" name="sum" disabled={true}></input>
+            <fieldset>
+                <label className="label">
+                    <span>В пределах МКАД?</span>
+                </label>
+                <label>
+                    <input className="" type="radio" name="logistic" value={true} id="true"></input>
+                    <span class="radio-title">Да</span>
+                </label>
+                <label>
+                    <input className="" type="radio" name="logistic" value={false} id="false"></input>
+                    <span class="radio-title">Нет</span>
+                </label>
+            </fieldset>
             <label className="label">Стоимость логистики </label>
             <input className="input" type="text" placeholder="Стоимость логистики" name="Logistic" onChange={handleChangeLogisticsCost}></input>
-            <label className="label">Итоговая сумма</label>
+            {/* <label className="label">Итоговая сумма</label>
             <input className="input" type="text" placeholder="Итоговая сумма" name="totalCost" disabled={true}></input>
             <label className="label">Итого по безналичному расчёту</label>
-            <input className="input" type="text" placeholder="Итого по безналичному расчёту" name="CashlessPayments" disabled={true}></input>
+            <input className="input" type="text" placeholder="Итого по безналичному расчёту" name="CashlessPayments" disabled={true}></input> */}
 
             {/* <p> Лист 2 </p> */}
-            
-            {/* <button onClick={showRows}>showRows</button> */}
+
+            <button onClick={addList}>Добавить лист</button>
             <button onClick={downloadPDF}>Download PDF</button>
         </div>
     );

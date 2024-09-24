@@ -100,17 +100,6 @@
     gap: 10px;
 }
 
-/* .table__staff {
-    font-family: arial;
-    font-weight: 600;
-    font-size: calc(0.021* 60vw);
-}
-
-.table__staff_subtitle {
-    font-weight: 400;
-    font-size: calc(0.0165* 60vw);
-} */
-
 .footer {
     display: flex;
     justify-content: space-between;
@@ -126,4 +115,8 @@
 
 .list__totla-cost {
     font-weight: 600;
+}
+
+.button__list_delete {
+    min-width: 100px;
 }

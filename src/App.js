@@ -4,7 +4,9 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Form from './components/Form/Form'
 import Header from './components/Header/Header'
+import Footer from './components/Footer/Footer'
 import Kp from './components/KP/Kp'
+import {lists} from './utils/const'
 
 
 function App() {
@@ -34,25 +36,12 @@ function App() {
   const [eventPlace, setEventPlace] = useState("МО Тюллип инн Софрино")
   const [countOfPerson, setCountOfPerson] = useState("600")
   const [logisticsCost, setLogisticsCost] = useState("10000")
-  // const [productCount, setProductCount] = useState(0)
-  // const [productPrice, setProductPrice] = useState(0)
-  // const [product, setProduct] = useState(0)
-  // const [compositionProduct, setCompositionProduct] = useState(0)
-  // const [weightProduct, setWeightProduct] = useState(0)
   const [rows, setRows] = useState([])
+  const [listsKp, setListsKp] = useState(lists)
 
   const handleChangeKpNumber = ({ target: { value } }) => {
     setKpNumber(value)
   }
-  // const handleChangeProduct = ( value ) => {
-  //   setProduct(value)
-  // }
-  // const handleChangeWeightProduct = ( value ) => {
-  //   setWeightProduct(value)
-  // }
-  // const handleChangeCompositionProduct = ( value ) => {
-  //   setCompositionProduct(value)
-  // }
   const handleChangeKpDate = ({ target: { value } }) => {
     const enteredDate = new Date(value)
     setKpDate(enteredDate.toLocaleDateString('ru-RU', {
@@ -117,12 +106,6 @@ function App() {
   const handleChangeLogisticsCost = ({ target: { value } }) => {
     setLogisticsCost(value)
   }
-  // const handleChangeProductCount = (value) => {
-  //   setProductCount(value)
-  // }
-  // const handleChangeProductPrice = (value) => {
-  //   setProductPrice(value)
-  // }
 
   const downloadPDF = () => {
     const captureArr = document.querySelectorAll('.list');
@@ -131,8 +114,6 @@ function App() {
     captureArr.forEach((item, index, arr) => {
       html2canvas(item).then((canvas) => {
         const imgData = canvas.toDataURL('img/png');
-        // const componentWidth = doc.internal.pageSize.getWidth();
-        // const componentHeight = doc.internal.pageSize.getHeight();
         const componentWidth = 297;
         const componentHeight = 210;
         console.log(index);
@@ -150,14 +131,70 @@ function App() {
     })
   }
 
+  const exportPDF = async () => {
+    const lists = document.querySelectorAll(".list"); // Выбираем все элементы с классом list
+    const pdf = new jsPDF("landscape", "mm", "a4"); // Создаем экземпляр jsPDF с альбомной ориентацией
+
+    for (let i = 0; i < lists.length; i++) {
+        const list = lists[i];
+
+        // Преобразуем элемент в изображение с помощью html2canvas
+        const canvas = await html2canvas(list, { scale: 2 });
+        const imgData = canvas.toDataURL("image/png");
+
+        // Вычисляем размеры для картинки, чтобы она уместилась на листе A4
+        const imgWidth = 297; // Ширина страницы A4 в мм (landscape)
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        if (i !== 0) {
+            pdf.addPage(); // Добавляем новую страницу для каждого элемента, начиная со второй
+        }
+
+        // Добавляем изображение на текущую страницу
+        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+    }
+
+    // Сохраняем PDF
+    pdf.save("lists.pdf");
+};
+
   const addRowInPdf = (newObj) => {
-    setRows([...rows,newObj])
+    setRows(newObj);
+    setListsKp([...listsKp, {id: listsKp.length+1, rows: newObj}])
   }
+  const addList = () => {
+    console.log('add list');
+    
+  }
+
+  function deleteRow(listId, rowIndex) {
+    setListsKp((prevListsKp) => {
+      return prevListsKp.map((list) => {
+        if (list.id === listId) {
+          // Создаем новый массив rows без элемента по указанному индексу
+          const updatedRows = list.rows.filter((_, index) => index !== rowIndex);
+          
+          // Возвращаем обновленный объект списка с новыми rows
+          return {
+            ...list,
+            rows: updatedRows,
+          };
+        }
+        return list; // Возвращаем другие списки без изменений
+      });
+    });
+}
+
+function deleteList(id) {
+  setListsKp(listsKp.filter(obj=>obj.id !== id))
+  // let list = listsKp.find(obj=>obj.id === id)
+  // console.log(list);
+}
 
   return (
     <div className='page'>
       <Form
-        downloadPDF={downloadPDF}
+        downloadPDF={exportPDF}
         handleChangeKpNumber={handleChangeKpNumber}
         handleChangeKpDate={handleChangeKpDate}
         handleChangeContractNumber={handleChangeContractNumber}
@@ -167,12 +204,8 @@ function App() {
         handleChangeEventPlace={handleChangeEventPlace}
         handleChangeCountOfPerson={handleChangeCountOfPerson}
         handleChangeLogisticsCost={handleChangeLogisticsCost}
-        // handleChangeProductCount={handleChangeProductCount}
-        // handleChangeProductPrice={handleChangeProductPrice}
-        // handleChangeProduct={handleChangeProduct}
-        // handleChangeWeightProduct={handleChangeWeightProduct}
-        // handleChangeCompositionProduct={handleChangeCompositionProduct}
         addRowInPdf={addRowInPdf}
+        addList={addList}
       />
       <div className="preview">
         <Header
@@ -185,7 +218,7 @@ function App() {
           contractNumber={contractNumber}
           contractDate={contractDate}
         />
-        <Kp
+        {/* <Kp
           startEvent={startEvent}
           endEvent={endEvent}
           startTime={startTime}
@@ -193,15 +226,22 @@ function App() {
           eventPlace={eventPlace}
           countOfPerson={countOfPerson}
           logisticsCost={logisticsCost}
-          // cashlessPayments={cashlessPayments}
-          // productCount={productCount}
-          // productPrice={productPrice}
-          // product={product}
-          // compositionProduct={compositionProduct}
-          // weightProduct={weightProduct}
           rows={rows}
-        />
-        {/* <Footer /> */}
+        /> */}
+        {listsKp.map((item) => (<Kp
+          key={item.id}
+          startEvent={startEvent}
+          endEvent={endEvent}
+          startTime={startTime}
+          endTime={endTime}
+          eventPlace={eventPlace}
+          countOfPerson={countOfPerson}
+          logisticsCost={logisticsCost}
+          list={item}
+          deleteRow={deleteRow}
+          id={item.id}
+          deleteList={deleteList} />))}
+        <Footer lists={listsKp} countOfPerson={countOfPerson}/>
       </div>
     </div>
   );

@@ -26,13 +26,14 @@ p {
 .list {
     background-color: white;
     width: 60vw;
-    height: calc(0.635*60vw);
+    height: calc(210/297*60vw);
     display: flex;
     flex-direction: column;
     padding: calc(0.03*60vw) calc(0.038*60vw);
     justify-content: space-between;
     margin-top: 20px;
     box-sizing: border-box;
+    margin: 20px auto;
 }
 
 .list:first-child {
