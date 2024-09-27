@@ -1,3 +1,29 @@
 .footer__logo-container {
-    margin: 17px auto;
+    margin: 1.18vw auto 6.39vw;
+}
+
+.footer__count-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.9vw;
+}
+
+.list_footer {
+    justify-content: start;
+}
+
+.footer__title {
+    align-self: center;
+}
+
+.totalKp {
+    padding: 0;
+    margin: 0;
+}
+
+.footer__row {
+    text-align: start;
+    list-style: none;
+    padding: 0;
+
 }

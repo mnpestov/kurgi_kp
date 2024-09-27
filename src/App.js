@@ -1,195 +1,214 @@
 import './App.css';
-import React, { useState } from "react";
+import React, { useReducer, useCallback, Suspense, lazy } from "react";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import Form from './components/Form/Form'
-import Header from './components/Header/Header'
-import Footer from './components/Footer/Footer'
-import Kp from './components/KP/Kp'
-import {lists} from './utils/const'
+import Form from './components/Form/Form';
+import Header from './components/Header/Header';
+import Kp from './components/KP/Kp';
+import { lists } from './utils/const';
+import PavelPhoto from './images/PavelPhoto.png';
+import PeterPhoto from './images/PeterPhoto.jpg';
 
+// Ленивое загрузка компонента Footer
+const Footer = lazy(() => import('./components/Footer/Footer'));
 
-function App() {
-
-  const current = new Date();
-  const options = {
-    hour: 'numeric', minute: 'numeric', second: 'numeric',
-    timeZoneName: 'long'
-  }
-  const date = current.toLocaleDateString('ru-RU', {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-  });
-  const [managerName, setManagerName] = useState('Павел Кург')
-  const [managerJobTitle, setManagerJobTitle] = useState('Руководитель проекта')
-  const [managerEmail, setManagerEmail] = useState('kurgi-bar@yandex.ru')
-  const [managerTel, setManagerTel] = useState('+7 925 516-31-16')
-  const [kpNumber, setKpNumber] = useState("111")
-  const [kpDate, setKpDate] = useState(date)
-  const [contractNumber, setContractNumber] = useState("111")
-  const [contractDate, setContractDate] = useState(date)
-  const [startEvent, setStartEvent] = useState(date)
-  const [endEvent, setEndEvent] = useState(date)
-  const [startTime, setStartTime] = useState(date)
-  const [endTime, setEndTime] = useState(date)
-  const [eventPlace, setEventPlace] = useState("МО Тюллип инн Софрино")
-  const [countOfPerson, setCountOfPerson] = useState("600")
-  const [logisticsCost, setLogisticsCost] = useState("10000")
-  const [rows, setRows] = useState([])
-  const [listsKp, setListsKp] = useState(lists)
-
-  const handleChangeKpNumber = ({ target: { value } }) => {
-    setKpNumber(value)
-  }
-  const handleChangeKpDate = ({ target: { value } }) => {
-    const enteredDate = new Date(value)
-    setKpDate(enteredDate.toLocaleDateString('ru-RU', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    }))
-  }
-  const handleChangeContractNumber = ({ target: { value } }) => {
-    setContractNumber(value)
-  }
-  const handleChangeContractDate = ({ target: { value } }) => {
-    const enteredDate = new Date(value)
-    setContractDate(enteredDate.toLocaleDateString('ru-RU', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    }))
-  }
-  const handleChangeStartEvent = ({ target: { value } }) => {
-    const enteredDate = new Date(value)
-    setStartEvent(enteredDate.toLocaleDateString('ru-RU', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    }))
-    setStartTime(enteredDate.toLocaleDateString('ru-RU', {
-      hour: 'numeric',
-      minute: 'numeric'
-    }))
-  }
-  const handleChangeEndEvent = ({ target: { value } }) => {
-    const enteredDate = new Date(value)
-    setEndEvent(enteredDate.toLocaleDateString('ru-RU', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    }))
-    setEndTime(enteredDate.toLocaleDateString('ru-RU', {
-      hour: 'numeric',
-      minute: 'numeric'
-    }))
-  }
-  const handleChangeEventPlace = ({ target: { value } }) => {
-    setEventPlace(value)
-  }
-  const handleChangeCountOfPerson = ({ target: { value } }) => {
-    const declination = (value) => {
-      if (value % 10 === 2 || value % 10 === 3 || value % 10 === 4) {
-        if (value % 100 !== 12 && value % 100 !== 13 && value % 100 !== 14) {
-          return `${value} человека`
-        }
-        else {
-          return `${value} человек`
-        }
-      } else {
-        return `${value} человек`
-      }
-    }
-    setCountOfPerson(declination(value))
-  }
-  const handleChangeLogisticsCost = ({ target: { value } }) => {
-    setLogisticsCost(value)
-  }
-
-  const downloadPDF = () => {
-    const captureArr = document.querySelectorAll('.list');
-    const doc = new jsPDF('l', 'mm', 'a4');
-
-    captureArr.forEach((item, index, arr) => {
-      html2canvas(item).then((canvas) => {
-        const imgData = canvas.toDataURL('img/png');
-        const componentWidth = 297;
-        const componentHeight = 210;
-        console.log(index);
-        if (index === 0) {
-          doc.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight);
-          console.log(componentWidth, componentHeight);
-        } else {
-          doc.addPage('a4', 'l');
-          doc.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight);
-        }
-        if (index === arr.length - 1) {
-          doc.save('test.pdf')
-        }
-      })
-    })
-  }
-
-  const exportPDF = async () => {
-    const lists = document.querySelectorAll(".list"); // Выбираем все элементы с классом list
-    const pdf = new jsPDF("landscape", "mm", "a4"); // Создаем экземпляр jsPDF с альбомной ориентацией
-
-    for (let i = 0; i < lists.length; i++) {
-        const list = lists[i];
-
-        // Преобразуем элемент в изображение с помощью html2canvas
-        const canvas = await html2canvas(list, { scale: 2 });
-        const imgData = canvas.toDataURL("image/png");
-
-        // Вычисляем размеры для картинки, чтобы она уместилась на листе A4
-        const imgWidth = 297; // Ширина страницы A4 в мм (landscape)
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-        if (i !== 0) {
-            pdf.addPage(); // Добавляем новую страницу для каждого элемента, начиная со второй
-        }
-
-        // Добавляем изображение на текущую страницу
-        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-    }
-
-    // Сохраняем PDF
-    pdf.save("lists.pdf");
+const initialState = {
+  formData: {
+    managerName: 'Павел Кург',
+    managerJobTitle: 'Руководитель проекта',
+    managerEmail: 'kurgi-bar@yandex.ru',
+    managerTel: '+7 925 516-31-16',
+    managerPhoto: PavelPhoto,
+    kpNumber: '111',
+    kpDate: new Date().toLocaleDateString('ru-RU'),
+    contractNumber: '111',
+    contractDate: new Date().toLocaleDateString('ru-RU'),
+    startEvent: new Date().toLocaleDateString('ru-RU'),
+    endEvent: new Date().toLocaleDateString('ru-RU'),
+    startTime: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
+    eventPlace: 'МО Тюллип инн Софрино',
+    countOfPerson: '600 человек',
+    logisticsCost: '10000',
+    isWithinMkad: null
+  },
+  listsKp: lists,
 };
 
-  const addRowInPdf = (newObj) => {
-    setRows(newObj);
-    setListsKp([...listsKp, {id: listsKp.length+1, rows: newObj}])
-  }
-  const addList = () => {
-    console.log('add list');
-    
-  }
-
-  function deleteRow(listId, rowIndex) {
-    setListsKp((prevListsKp) => {
-      return prevListsKp.map((list) => {
-        if (list.id === listId) {
-          // Создаем новый массив rows без элемента по указанному индексу
-          const updatedRows = list.rows.filter((_, index) => index !== rowIndex);
-          
-          // Возвращаем обновленный объект списка с новыми rows
-          return {
-            ...list,
-            rows: updatedRows,
-          };
+function reducer(state, action) {
+  switch (action.type) {
+    case 'UPDATE_FORM_DATA':
+      return {
+        ...state,
+        formData: {
+          ...state.formData,
+          ...action.payload
         }
-        return list; // Возвращаем другие списки без изменений
-      });
-    });
+      };
+    case 'ADD_ROW_IN_PDF':
+      return {
+        ...state,
+        listsKp: [...state.listsKp, { id: state.listsKp.length + 1, rows: action.payload }]
+      };
+    case 'DELETE_ROW':
+      return {
+        ...state,
+        listsKp: state.listsKp.map(list => {
+          if (list.id === action.payload.listId) {
+            const updatedRows = list.rows.filter((_, index) => index !== action.payload.rowIndex);
+            return { ...list, rows: updatedRows };
+          }
+          return list;
+        })
+      };
+    case 'DELETE_LIST':
+      return {
+        ...state,
+        listsKp: state.listsKp.filter(obj => obj.id !== action.payload.id)
+      };
+    default:
+      return state;
+  }
 }
 
-function deleteList(id) {
-  setListsKp(listsKp.filter(obj=>obj.id !== id))
-  // let list = listsKp.find(obj=>obj.id === id)
-  // console.log(list);
-}
+function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { formData, listsKp } = state;
+
+  // Форматирование цены
+  const GetPrice = useCallback((price) => {
+    return `${Math.round(price).toLocaleString('ru-RU')} руб`;
+  }, []);
+
+  // Обработчик смены менеджера
+  const handleManagerChange = useCallback(({ target: { value } }) => {
+    const manager = value === 'true'
+      ? {
+          managerPhoto: PeterPhoto,
+          managerName: 'Петр Кург',
+          managerTel: '+7 926 966-88-71',
+          managerJobTitle: 'Руководитель проекта',
+          managerEmail: 'kurgi-bar@yandex.ru'
+        }
+      : {
+          managerPhoto: PavelPhoto,
+          managerName: 'Павел Кург',
+          managerTel: '+7 925 516-31-16',
+          managerJobTitle: 'Руководитель проекта',
+          managerEmail: 'kurgi-bar@yandex.ru'
+        };
+
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: manager });
+  }, []);
+
+  // Обработчик смены логистики
+  const handleLogisticsChange = useCallback(({ target: { value } }) => {
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { isWithinMkad: value === "true" } });
+  }, []);
+
+  // Форматирование даты
+  const formatDate = useCallback((value, options = { year: 'numeric', month: 'numeric', day: 'numeric' }) => {
+    const enteredDate = new Date(value);
+    return enteredDate.toLocaleDateString('ru-RU', options);
+  }, []);
+
+  // Корректное склонение слова "человек"
+  const getDeclination = useCallback((num) => {
+    const n = parseInt(num, 10);
+    const remainder10 = n % 10;
+    const remainder100 = n % 100;
+
+    if (remainder100 >= 11 && remainder100 <= 14) {
+      return `${n} человек`;
+    }
+
+    if (remainder10 === 1) {
+      return `${n} человек`;
+    }
+
+    if (remainder10 >= 2 && remainder10 <= 4) {
+      return `${n} человека`;
+    }
+
+    return `${n} человек`;
+  }, []);
+
+  // Обработчики изменений полей формы
+  const handleChangeKpNumber = useCallback(({ target: { value } }) => {
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { kpNumber: value } });
+  }, []);
+
+  const handleChangeKpDate = useCallback(({ target: { value } }) => {
+    const formattedDate = formatDate(value);
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { kpDate: formattedDate } });
+  }, [formatDate]);
+
+  const handleChangeContractNumber = useCallback(({ target: { value } }) => {
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { contractNumber: value } });
+  }, []);
+
+  const handleChangeContractDate = useCallback(({ target: { value } }) => {
+    const formattedDate = formatDate(value);
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { contractDate: formattedDate } });
+  }, [formatDate]);
+
+  const handleChangeStartEvent = useCallback(({ target: { value } }) => {
+    const dateObj = new Date(value);
+    const formattedDate = dateObj.toLocaleDateString('ru-RU', { year: 'numeric', month: 'numeric', day: 'numeric' });
+    const formattedTime = dateObj.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { startEvent: formattedDate, startTime: formattedTime } });
+  }, []);
+
+  const handleChangeEndEvent = useCallback(({ target: { value } }) => {
+    const dateObj = new Date(value);
+    const formattedDate = dateObj.toLocaleDateString('ru-RU', { year: 'numeric', month: 'numeric', day: 'numeric' });
+    const formattedTime = dateObj.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { endEvent: formattedDate, endTime: formattedTime } });
+  }, []);
+
+  const handleChangeEventPlace = useCallback(({ target: { value } }) => {
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { eventPlace: value } });
+  }, []);
+
+  const handleChangeCountOfPerson = useCallback(({ target: { value } }) => {
+    const declinated = getDeclination(value);
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { countOfPerson: declinated } });
+  }, [getDeclination]);
+
+  const handleChangeLogisticsCost = useCallback(({ target: { value } }) => {
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { logisticsCost: value } });
+  }, []);
+
+  // Функция экспорта в PDF
+  const exportPDF = useCallback(async () => {
+    const pdf = new jsPDF("landscape", "mm", "a4");
+    const lists = document.querySelectorAll(".list");
+
+    for (const [index, list] of lists.entries()) {
+      const canvas = await html2canvas(list, { scale: 2 });
+      const imgData = canvas.toDataURL("image/png");
+      const imgWidth = 297; // Ширина A4 в мм (альбомная ориентация)
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      if (index !== 0) pdf.addPage();
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+    }
+
+    pdf.save("lists.pdf");
+  }, []);
+
+  // Функции добавления и удаления строк/списков
+  const addRowInPdf = useCallback((newObj) => {
+    dispatch({ type: 'ADD_ROW_IN_PDF', payload: newObj });
+  }, []);
+
+  const deleteRow = useCallback((listId, rowIndex) => {
+    dispatch({ type: 'DELETE_ROW', payload: { listId, rowIndex } });
+  }, []);
+
+  const deleteList = useCallback((id) => {
+    dispatch({ type: 'DELETE_LIST', payload: { id } });
+  }, []);
 
   return (
     <div className='page'>
@@ -205,46 +224,36 @@ function deleteList(id) {
         handleChangeCountOfPerson={handleChangeCountOfPerson}
         handleChangeLogisticsCost={handleChangeLogisticsCost}
         addRowInPdf={addRowInPdf}
-        addList={addList}
+        handleLogisticsChange={handleLogisticsChange}
+        handleManagerChange={handleManagerChange}
+        formData={formData}
       />
       <div className="preview">
-        <Header
-          managerName={managerName}
-          managerJobTitle={managerJobTitle}
-          managerEmail={managerEmail}
-          managerTel={managerTel}
-          kpNumber={kpNumber}
-          kpDate={kpDate}
-          contractNumber={contractNumber}
-          contractDate={contractDate}
-        />
-        {/* <Kp
-          startEvent={startEvent}
-          endEvent={endEvent}
-          startTime={startTime}
-          endTime={endTime}
-          eventPlace={eventPlace}
-          countOfPerson={countOfPerson}
-          logisticsCost={logisticsCost}
-          rows={rows}
-        /> */}
-        {listsKp.map((item) => (<Kp
-          key={item.id}
-          startEvent={startEvent}
-          endEvent={endEvent}
-          startTime={startTime}
-          endTime={endTime}
-          eventPlace={eventPlace}
-          countOfPerson={countOfPerson}
-          logisticsCost={logisticsCost}
-          list={item}
-          deleteRow={deleteRow}
-          id={item.id}
-          deleteList={deleteList} />))}
-        <Footer lists={listsKp} countOfPerson={countOfPerson}/>
+        <Header formData={formData} />
+        {listsKp.map((item) => (
+          <Kp
+            key={item.id}
+            startEvent={formData.startEvent}
+            endEvent={formData.endEvent}
+            startTime={formData.startTime}
+            endTime={formData.endTime}
+            eventPlace={formData.eventPlace}
+            countOfPerson={formData.countOfPerson}
+            logisticsCost={formData.logisticsCost}
+            isWithinMkad={formData.isWithinMkad}
+            list={item}
+            deleteRow={deleteRow}
+            id={item.id}
+            deleteList={deleteList}
+            GetPrice={GetPrice}
+          />
+        ))}
+        <Suspense fallback={<div>Загрузка Footer...</div>}>
+          <Footer lists={listsKp} countOfPerson={formData.countOfPerson} GetPrice={GetPrice} />
+        </Suspense>
       </div>
     </div>
   );
 }
 
-export default App;
+export default React.memo(App);

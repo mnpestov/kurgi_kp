@@ -3,20 +3,13 @@ import './Kp.css';
 import logo from '../../images/logo.png'
 import Row from '../Row/Row'
 
-function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerson, logisticsCost, list, deleteRow, id, deleteList }) {
-
-    function GetPrice(price) {
-        price += "";
-        price = new Array(4 - price.length % 3).join("U") + price;
-        return price.replace(/([0-9U]{3})/g, "$1 ").replace(/U/g, "");
-    }
+function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerson, logisticsCost, list, deleteRow, id, deleteList, isWithinMkad, GetPrice }) {
 
     const totalCost = list.rows.map((item) => {
         return item.countOfProduct * item.priceOfProduct
     })
         .reduce((partialSum, a) => partialSum + a, 0);
     const deleteL = () => {
-        console.log(id);
         deleteList(id)
     }
 
@@ -45,7 +38,7 @@ function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerso
                                 </th>
                             </tr>
                         </thead>
-                        {list.rows.map((item, index) => (<Row key={index} data={item} index={index} deleteRow={deleteRow} listId={list.id} />))}
+                        {list.rows.map((item, index) => (<Row key={index} data={item} index={index} deleteRow={deleteRow} listId={list.id} GetPrice={GetPrice} />))}
                     </table>
                 </div>
                 <div className="table__subtitle">
@@ -54,19 +47,20 @@ function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerso
                             <p className="list__footnote">*В стоимость включены все расходники.</p>
                         </div>
                         <div className="list__total">
-                            <p className="list__subtotla">{`Сумма: ${GetPrice(totalCost)} руб`}</p>
-                            <p className="list__logistic-cost">{`Логистика в пределах МКАД + монтаж / демонтаж: ${GetPrice(logisticsCost)} руб`}</p>
-                            <p className="list__totla-cost">{`Итоговая сумма: ${GetPrice(parseInt(totalCost) + parseInt(logisticsCost))} руб`}</p>
-                            <p className="list__totla-cost">{`Итого по безналичному расчёту: ${GetPrice(Math.round((parseInt(totalCost) + parseInt(logisticsCost)) * 1.07))} руб`}</p>
+                            <p className="list__subtotla">{`Сумма: ${GetPrice(totalCost)}`}</p>
+                            <p className="list__logistic-cost">{isWithinMkad
+                                ? `Логистика в пределах МКАД + монтаж / демонтаж: ${GetPrice(logisticsCost)}`
+                                : `Логистика за пределами МКАД + монтаж / демонтаж: ${GetPrice(logisticsCost)}`}</p>
+                            <p className="list__totla-cost">{`Итоговая сумма: ${GetPrice(parseInt(totalCost) + parseInt(logisticsCost))}`}</p>
+                            <p className="list__totla-cost">{`Итого по безналичному расчёту: ${GetPrice(Math.round((parseInt(totalCost) + parseInt(logisticsCost)) * 1.07))}`}</p>
 
                         </div>
                     </div>
                 </div>
             </div>
-            <button type="button button__list_delete" className="list-button" onClick={deleteL}>x</button>
+            <button type="button" className="list-button  button__list_delete remove-button" onClick={deleteL}>Удалить лист</button>
         </>
     );
-
 }
 
 export default Kp;

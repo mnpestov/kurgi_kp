@@ -4,22 +4,19 @@ p {
 }
 
 .header {
-    /* margin: 0 90px; */
-    /* max-width: 1980px; */
     display: flex;
-    /* max-height: 1256px; */
 }
 
 .form {
     display: flex;
     flex-direction: column;
     min-width: 30vw;
-    gap: 8px;
+    gap: 0.6vw;
 }
 
 .preview {
     box-sizing: border-box;
-    padding: 20px;
+    padding: 1.4vw;
     background-color: lightgrey;
 }
 
@@ -31,15 +28,8 @@ p {
     flex-direction: column;
     padding: calc(0.03*60vw) calc(0.038*60vw);
     justify-content: space-between;
-    margin-top: 20px;
     box-sizing: border-box;
-    margin: 20px auto;
-}
-
-.list:first-child {
-    margin-top: 0;
-    justify-content: space-between;
-    /* padding: 0 88px 109px; */
+    margin: 1.4vw auto;
 }
 
 .logo-container {
@@ -54,19 +44,18 @@ p {
 }
 
 .subtitle {
-    /* margin-top: 155px; */
     width: 100%;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid black;
-    padding-bottom: 25px;
-    margin-bottom: 27px;
-    gap: 40px;
+    padding-bottom: 1.4vw;
+    margin-bottom: 1.85vw;
+    gap: 2.7vw;
 }
 
 .manager {
     display: flex;
-    gap: 20px;
+    gap: 1.4vw;
 }
 
 .manager_infos {
@@ -78,7 +67,7 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: end;
-    gap: 7px;
+    gap: 0.48vw;
     width: max-content;
 }
 
@@ -87,7 +76,7 @@ p {
     padding: 0;
 }
 
-.manager_photo {
+.manager__photo {
     width: calc(0.6*15.73vw);
 }
 
@@ -103,52 +92,12 @@ p {
     font-family: arial;
     font-weight: 400;
     font-size: calc(0.019* 60vw);
-    max-width: 980px;
-    /* margin-bottom: 3px; */
-    line-height: 20px;
+    max-width: 68vw;
+    line-height: 1.4vw;
 }
-
-.top {
-    height: calc(0.6*15.61vw);
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px black solid;
-    padding-bottom: 14px;
-
-}
-
-.right {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 42px;
-    align-items: end;
-    gap: 40px;
-
-}
-
-.list__subtitle-container {
-    margin: 0 38px;
-}
-
-/* .list__subtitle {
-    margin: 0;
-    padding: 0;
-    font-family: arial;
-    font-size: 25px;
-    font-style: italic;
-    letter-spacing: -0.35px;
-} */
 
 .list__subtitle_place {
     margin: 0;
     padding: 0;
     text-align: start;
-}
-
-.table__column {
-    margin: 0;
-    padding: 0;
-    font-family: arial;
-    font-size: 28px;
-    margin-bottom: -6px;
 }

@@ -1,10 +1,19 @@
 import React from "react";
 import './Header.css';
 import logo from '../../images/logo.png'
-import managerPhoto from '../../images/managerPhoto.png'
 
-function Header({ managerName, managerJobTitle, managerEmail, managerTel, kpNumber, kpDate, contractNumber, contractDate }) {
-
+function Header({ formData }) {
+    const {
+        managerName,
+        managerJobTitle,
+        managerEmail,
+        managerTel,
+        kpNumber,
+        kpDate,
+        contractNumber,
+        contractDate,
+        managerPhoto
+    } = formData
     return (
         <section className="header">
             <div className="list">
@@ -25,7 +34,7 @@ function Header({ managerName, managerJobTitle, managerEmail, managerTel, kpNumb
                             <p className="manager_info manager_info__email">{managerEmail}</p>
                             <p className="manager_info manager_info__tel">{managerTel}</p>
                         </div>
-                        <img className="manager_photo" src={managerPhoto} alt="manager photo" />
+                        <img className="manager__photo" src={managerPhoto} alt="manager" />
                     </div>
                 </div>
             </div>

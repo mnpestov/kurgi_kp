@@ -1,15 +1,23 @@
 import React from "react";
 import './Row.css';
 
-function Row({ data, index, deleteRow, listId }) {
-    const { countOfProduct, priceOfProduct, product, compositionOfProduct, productWeight } = data
+function Row({ data, index, deleteRow, listId, GetPrice }) {
+    const { countOfProduct, priceOfProduct, product, composition, productWeight, typeOfProduct } = data
     const totalCostOfProduct = countOfProduct * priceOfProduct
-
-    function GetPrice(price) {
-        price += "";
-        price = new Array(4 - price.length % 3).join("U") + price;
-        return price.replace(/([0-9U]{3})/g, "$1 ").replace(/U/g, "");
+    const getProductWeightWithMeasure = (productWeight, typeOfProduct) => {
+        if (!productWeight) {
+            return productWeight
+        }
+        if (typeOfProduct === 'eat') {
+            productWeight = productWeight + 'гр'
+            return productWeight
+        } else if (typeOfProduct === 'drink') {
+            productWeight = productWeight + 'мл'
+            return productWeight
+        }
     }
+
+    const productWeightWithMeasure = getProductWeightWithMeasure(productWeight, typeOfProduct)
 
     function deleteR() {
         deleteRow(listId, index)
@@ -23,8 +31,9 @@ function Row({ data, index, deleteRow, listId }) {
             <tr className="table__row">
                 <td className="table__line-container">
                     <p className="table__line tabel__line_product">{`${(product) ? product : ' '} `}
-                        <span className="table__line tabel__line_composition-of-product">{`${(compositionOfProduct) ? compositionOfProduct : ' '}`}</span>
-                        {` ${(productWeight) ? productWeight : ' '}`}</p>
+                        <span className="table__line tabel__line_composition-of-product">{`${(composition) ? composition : ' '}`}</span>
+                        <span className="table__line tabel__line_weight-of-product">{` ${(productWeight) ? productWeightWithMeasure : ' '}`}</span>
+                    </p>
                 </td>
                 <td className="row_count">{`${(countOfProduct) ? countOfProduct : ''}`}</td>
                 <td className="row_count">{`${(priceOfProduct) ? GetPrice(priceOfProduct) : ''}`}</td>

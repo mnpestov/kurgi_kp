@@ -4,10 +4,9 @@
 
 .table__row-button {
     position: absolute;
-    left: -28px;
-    min-width: 20px;
-    min-height: 20px;
-    /* visibility: hidden; */
+    left: -1.7vw;
+    min-width: 1.4vw;
+    min-height: 1.4vw;
 }
 
 .row-button {
@@ -15,12 +14,10 @@
 }
 
 .table__row-button:hover .row-button {
-    /* visibility: visible; */
     display: block;
 }
 
 .row_count {
-    /* border-bottom: 1px solid black; */
     width: 100%;
     text-align: end;
     font-family: arial;

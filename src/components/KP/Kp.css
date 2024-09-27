@@ -1,11 +1,10 @@
-.list__container {
+ .list__container { 
     display: flex;
     flex-direction: column;
 }
 
 .list__logo {
     width: calc(0.6*19.12vw);
-    margin-left: 3px;
 }
 
 .list__title {
@@ -17,7 +16,7 @@
 }
 
 .list__table {
-    gap: 10px;
+    gap: 0.69vw;
     display: flex;
     flex-direction: column;
 }
@@ -42,8 +41,8 @@
 .table__titles {
     vertical-align: bottom;
     border-bottom: 1px solid black;
-    padding-bottom: 9px;
-    margin-bottom: 11px;
+    padding-bottom: 0.625vw;
+    margin-bottom: 0.764vw;
     align-items: end;
 }
 
@@ -62,7 +61,7 @@
 
 .table__line-container {
     display: flex;
-    gap: 3px;
+    gap: 0.209vw;
     align-items: end;
     justify-self: start;
 }
@@ -81,8 +80,6 @@
     font-weight: 400;
 }
 
-.tabel__line_product-weight {}
-
 .list__total {
     display: flex;
     flex-direction: column;
@@ -90,14 +87,14 @@
     justify-self: unset;
     font-size: calc(0.01765* 60vw);
     border-top: 1px solid black;
-    padding-top: 7px;
+    padding-top: 0.486vw;
     box-sizing: border-box;
 }
 
 .table__subtitle {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0.69vw;
 }
 
 .footer {
@@ -109,14 +106,10 @@
     align-items: end;
 }
 
-.list__footnotes {
-
-}
-
 .list__totla-cost {
     font-weight: 600;
 }
 
 .button__list_delete {
-    min-width: 100px;
-}
+    min-width: 10vw;
+} 
