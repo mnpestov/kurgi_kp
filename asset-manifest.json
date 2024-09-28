@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/kurgi_kp/static/css/main.7ae489bb.css",
-    "main.js": "/kurgi_kp/static/js/main.f68e1d11.js",
+    "main.js": "/kurgi_kp/static/js/main.97598b0c.js",
     "static/css/161.177317eb.chunk.css": "/kurgi_kp/static/css/161.177317eb.chunk.css",
     "static/js/161.995d03e2.chunk.js": "/kurgi_kp/static/js/161.995d03e2.chunk.js",
     "static/js/213.56c463b3.chunk.js": "/kurgi_kp/static/js/213.56c463b3.chunk.js",
@@ -12,7 +12,7 @@
     "static/media/logo.png": "/kurgi_kp/static/media/logo.e68c3bd6cad89fc84ea3.png",
     "index.html": "/kurgi_kp/index.html",
     "main.7ae489bb.css.map": "/kurgi_kp/static/css/main.7ae489bb.css.map",
-    "main.f68e1d11.js.map": "/kurgi_kp/static/js/main.f68e1d11.js.map",
+    "main.97598b0c.js.map": "/kurgi_kp/static/js/main.97598b0c.js.map",
     "161.177317eb.chunk.css.map": "/kurgi_kp/static/css/161.177317eb.chunk.css.map",
     "161.995d03e2.chunk.js.map": "/kurgi_kp/static/js/161.995d03e2.chunk.js.map",
     "213.56c463b3.chunk.js.map": "/kurgi_kp/static/js/213.56c463b3.chunk.js.map",
@@ -21,6 +21,6 @@
   },
   "entrypoints": [
     "static/css/main.7ae489bb.css",
-    "static/js/main.f68e1d11.js"
+    "static/js/main.97598b0c.js"
   ]
 }
