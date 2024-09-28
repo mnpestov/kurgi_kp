@@ -23,9 +23,9 @@ function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerso
                         <thead>
                             <tr className="table__row table__titles">
                                 <th className="table__title list__subtitle-container">
-                                    <p className="list__subtitle list__subtitle_place">{`${startEvent}-${endEvent} место: ${eventPlace};`}</p>
+                                    <p className="list__subtitle list__subtitle_place">{`${startEvent} - ${endEvent} место: ${eventPlace};`}</p>
                                     <p className="list__subtitle list__subtitle_person">{`кол-во персон: ${countOfPerson}`}</p>
-                                    <p className="list__subtitle list__subtitle_time">{`время мероприятия: ${startTime.slice(-6)} (${startEvent.slice(0, 5)}) -${endTime.slice(-6)} (${endEvent.slice(0, 5)}) `}</p>
+                                    <p className="list__subtitle list__subtitle_time">{`время мероприятия: ${startTime.slice(-6)} (${startEvent.slice(0, 5)}) - ${endTime.slice(-6)} (${endEvent.slice(0, 5)}) `}</p>
                                 </th>
                                 <th className="table__title">
                                     Количество, шт
