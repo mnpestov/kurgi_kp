@@ -36,8 +36,10 @@ function Row({ data, index, deleteRow, listId, GetPrice }) {
                     </p>
                 </td>
                 <td className="row_count">{`${(countOfProduct) ? countOfProduct : ''}`}</td>
-                <td className="row_count">{`${(priceOfProduct) ? GetPrice(priceOfProduct) : ''}`}</td>
-                <td className="row_count">{`${(totalCostOfProduct) ? GetPrice(totalCostOfProduct) : ''}`}</td>
+                {/* <td className="row_count">{`${(priceOfProduct) ? GetPrice(priceOfProduct) : ''}`}</td> */}
+                <td className="row_count">{`${(priceOfProduct) ? priceOfProduct : ''}`}</td>
+                {/* <td className="row_count">{`${(totalCostOfProduct) ? GetPrice(totalCostOfProduct) : ''}`}</td> */}
+                <td className="row_count">{`${(totalCostOfProduct) ? totalCostOfProduct : ''}`}</td>
             </tr>
         </tbody>
     );

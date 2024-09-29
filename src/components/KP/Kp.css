@@ -12,13 +12,14 @@
     padding: 0;
     font-family: 'arial';
     font-size: calc(0.028*60vw);
-    letter-spacing: 1px;
+    letter-spacing: 0.069vw;
 }
 
 .list__table {
     gap: 0.69vw;
     display: flex;
     flex-direction: column;
+    border-spacing: 0.138vw;
 }
 
 .list__subtitle-container {
@@ -40,7 +41,7 @@
 
 .table__titles {
     vertical-align: bottom;
-    border-bottom: 1px solid black;
+    border-bottom: 0.069vw solid black;
     padding-bottom: 0.625vw;
     margin-bottom: 0.764vw;
     align-items: end;
@@ -86,7 +87,7 @@
     align-items: end;
     justify-self: unset;
     font-size: calc(0.01765* 60vw);
-    border-top: 1px solid black;
+    border-top: 0.069vw solid black;
     padding-top: 0.486vw;
     box-sizing: border-box;
 }
@@ -113,3 +114,9 @@
 .button__list_delete {
     min-width: 10vw;
 } 
+
+@media (max-width: 768px) {
+    .list__table {
+        gap: 0.4vw;
+    }
+}
