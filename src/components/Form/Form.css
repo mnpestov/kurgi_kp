@@ -54,7 +54,7 @@
 .form__row table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 800px; /* Минимальная ширина таблицы для предотвращения сжатия */
+  /* min-width: 800px;  */
 }
 
 .form__row th, .form__row td {
