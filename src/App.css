@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 0.35rem; /* 5px */
+  min-width: 900px;
 }
 
 .preview {
