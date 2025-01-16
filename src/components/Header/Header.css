@@ -10,26 +10,26 @@ p {
 .form {
     display: flex;
     flex-direction: column;
-    min-width: 30vw;
-    gap: 0.6vw;
+    min-width: 432px;
+    gap: 8.64px;
 }
 
 .preview {
     box-sizing: border-box;
-    padding: 1.4vw;
+    padding: 20.16px;
     background-color: lightgrey;
 }
 
 .list {
     background-color: white;
-    width: 60vw;
-    height: calc(210/297*60vw);
+    width: 864px;
+    height: calc(210/297*864px);
     display: flex;
     flex-direction: column;
-    padding: calc(0.03*60vw) calc(0.038*60vw);
+    padding: calc(0.03*864px) calc(0.038*864px);
     justify-content: space-between;
     box-sizing: border-box;
-    margin: 1.4vw auto;
+    margin: 20.16px auto;
 }
 
 .logo-container {
@@ -40,7 +40,7 @@ p {
 }
 
 .logo {
-    width: calc(0.6*37.74vw);
+    width: 326.07px;
 }
 
 .subtitle {
@@ -48,26 +48,26 @@ p {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid black;
-    padding-bottom: 1.4vw;
-    margin-bottom: 1.85vw;
-    gap: 2.7vw;
+    padding-bottom: 20.16px;
+    margin-bottom: 26.64px;
+    gap: 38.88px;
 }
 
 .manager {
     display: flex;
-    gap: 1.4vw;
+    gap: 20.16px;
 }
 
 .manager_infos {
     font-family: arial;
-    font-size: calc(0.6*1.86vw);
+    font-size: calc(0.6*26.784px);
     font-weight: 400;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: end;
-    gap: 0.48vw;
+    gap: 6.912px;
     width: max-content;
 }
 
@@ -77,13 +77,13 @@ p {
 }
 
 .manager__photo {
-    width: calc(0.6*15.73vw);
+    width: calc(0.6*226.512px);
 }
 
 .kpNumber {
     display: flex;
     align-items: end;
-    width: calc(0.6*51vw);
+    width: calc(0.6*734.4px);
 }
 
 .kpNumber_title {
@@ -91,9 +91,9 @@ p {
     padding: 0;
     font-family: arial;
     font-weight: 400;
-    font-size: calc(0.019* 60vw);
-    max-width: 68vw;
-    line-height: 1.4vw;
+    font-size: calc(0.019* 864px);
+    max-width: 979.2px;
+    line-height: 20.16px;
 }
 
 .list__subtitle_place {

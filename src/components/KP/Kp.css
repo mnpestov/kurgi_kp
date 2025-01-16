@@ -1,31 +1,31 @@
- .list__container { 
+.list__container { 
     display: flex;
     flex-direction: column;
 }
 
 .list__logo {
-    width: calc(0.6*19.12vw);
+    width: calc(0.6 * 275.328px);
 }
 
 .list__title {
     margin: 0;
     padding: 0;
     font-family: 'arial';
-    font-size: calc(0.028*60vw);
-    letter-spacing: 0.069vw;
+    font-size: 24.36px;
+    letter-spacing: 1px;
 }
 
 .list__table {
-    gap: 0.69vw;
+    gap: 9.936px;
     display: flex;
     flex-direction: column;
-    border-spacing: 0.138vw;
+    border-spacing: 19.872px;
 }
 
 .list__subtitle-container {
     font-family: arial;
     font-weight: 400;
-    font-size: calc(0.0165* 60vw);
+    font-size: calc(0.0165 * 864px);
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -36,14 +36,14 @@
 .table__column {
     font-family: arial;
     font-weight: 400;
-    font-size: calc(0.0188* 60vw);
+    font-size: calc(0.0188 * 864px);
 }
 
 .table__titles {
     vertical-align: bottom;
-    border-bottom: 0.069vw solid black;
-    padding-bottom: 0.625vw;
-    margin-bottom: 0.764vw;
+    border-bottom: 1px solid black;
+    padding-bottom: 9px;
+    margin-bottom: 11px;
     align-items: end;
 }
 
@@ -57,12 +57,12 @@
 .table__title {
     font-family: arial;
     font-weight: 400;
-    font-size: calc(0.0188* 60vw);
+    font-size: calc(0.0188 * 864px);
 }
 
 .table__line-container {
     display: flex;
-    gap: 0.209vw;
+    gap: 30px;
     align-items: end;
     justify-self: start;
 }
@@ -70,11 +70,11 @@
 .table__line {
     font-family: arial;
     font-weight: 600;
-    font-size: calc(0.0165* 60vw);
+    font-size: calc(0.0165 * 864px);
 }
 
 .tabel__line_product {
-    font-size: calc(0.021* 60vw);
+    font-size: calc(0.021 * 864px);
 }
 
 .tabel__line_composition-of-product {
@@ -86,16 +86,16 @@
     flex-direction: column;
     align-items: end;
     justify-self: unset;
-    font-size: calc(0.01765* 60vw);
-    border-top: 0.069vw solid black;
-    padding-top: 0.486vw;
+    font-size: calc(0.01765 * 864px);
+    border-top: 1px solid black;
+    padding-top: 7px;
     box-sizing: border-box;
 }
 
 .table__subtitle {
     display: flex;
     flex-direction: column;
-    gap: 0.69vw;
+    gap: 100px;
 }
 
 .footer {
@@ -103,7 +103,7 @@
     justify-content: space-between;
     font-family: arial;
     font-weight: 400;
-    font-size: calc(0.0165* 60vw);
+    font-size: calc(0.0165 * 864px);
     align-items: end;
 }
 
@@ -112,11 +112,11 @@
 }
 
 .button__list_delete {
-    min-width: 10vw;
+    min-width: 144px;
 } 
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .list__table {
-        gap: 0.4vw;
+        gap: 5px;
     }
-}
+} */

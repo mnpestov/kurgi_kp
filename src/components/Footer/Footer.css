@@ -1,15 +1,16 @@
 .footer__logo-container {
-    margin: 1.18vw auto 6.39vw;
+    margin: 17px auto 92px;
 }
 
 .footer__count-container {
     display: flex;
     flex-direction: column;
-    gap: 1.9vw;
+    gap: 27px;
 }
 
 .list_footer {
     justify-content: start;
+    min-width: 864px;
 }
 
 .footer__title {
@@ -25,5 +26,4 @@
     text-align: start;
     list-style: none;
     padding: 0;
-
 }

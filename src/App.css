@@ -8,17 +8,18 @@
 .preview {
   box-sizing: border-box;
   padding: 1.875rem; /* 30px */
+  padding: 30px;
   background-color: lightgrey;
   overflow-x: auto; /* Предотвращение горизонтальной прокрутки */
 }
 
 /* Медиа-запросы для адаптивности */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .page {
-    padding: 0.2rem; /* 3.2px */
+    padding: 0.2rem; 
   }
 
   .preview {
-    padding: 1rem; /* 16px */
+    padding: 1rem; 
   }
-}
+} */

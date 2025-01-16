@@ -4,9 +4,9 @@
 
 .table__row-button {
     position: absolute;
-    left: -1.7vw;
-    min-width: 1.4vw;
-    min-height: 1.4vw;
+    left: -24.48px;
+    min-width: 20.16px;
+    min-height: 20.16px;
 }
 
 .row-button {
@@ -22,5 +22,5 @@
     text-align: end;
     font-family: arial;
     font-weight: 400;
-    font-size: calc(0.0188* 60vw);
+    font-size: calc(0.0188 * 864px);
 }
