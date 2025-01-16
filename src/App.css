@@ -12,14 +12,3 @@
   background-color: lightgrey;
   overflow-x: auto; /* Предотвращение горизонтальной прокрутки */
 }
-
-/* Медиа-запросы для адаптивности */
-/* @media (max-width: 768px) {
-  .page {
-    padding: 0.2rem; 
-  }
-
-  .preview {
-    padding: 1rem; 
-  }
-} */

@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import './Form.css';
 import FormRow from '../FormRow/FormRow';
+import ProductPopup from '../ProductPopup/ProductPopup';
 
 function Form({
   downloadPDF,
@@ -19,6 +20,7 @@ function Form({
   formData,
 }) {
 
+  const [showPopup, setShowPopup] = useState(false); 
   const [products, setProducts] = useState([]);
 
   // Универсальный обработчик изменений ввода
@@ -46,10 +48,15 @@ function Form({
     });
   }, []);
 
-  // Добавление новой строки товара
-  const handleAddProduct = useCallback(() => {
-    setProducts(prevProducts => [...prevProducts, { id: Date.now().toString() }]);
-  }, []);
+const handleAddProduct = (productData) => {
+  setProducts((prevProducts) => [
+      ...prevProducts,
+      {
+          id: Date.now(), // Уникальный идентификатор (можно использовать UUID или другой метод)
+          ...productData, // Добавляем все поля из productData
+      },
+  ]);
+};
 
   // Удаление строки товара
   const handleRemoveProduct = useCallback((id) => {
@@ -57,12 +64,26 @@ function Form({
   }, []);
 
   // Сохранение строк товаров в списке КП
+  // const addRow = useCallback((e) => {
+  //   e.preventDefault();
+  //   addRowInPdf(products);
+  //   e.target.reset();
+  //   setProducts([]);
+  // }, [products, addRowInPdf]);
   const addRow = useCallback((e) => {
     e.preventDefault();
-    addRowInPdf(products);
-    e.target.reset();
-    setProducts([]);
-  }, [products, addRowInPdf]);
+
+    // Разбиваем массив products на группы по 7 элементов
+    const chunkSize = 7;
+    for (let i = 0; i < products.length; i += chunkSize) {
+        const chunk = products.slice(i, i + chunkSize);
+        addRowInPdf(chunk); // Передаём текущую группу в addRowInPdf
+    }
+
+    e.target.reset(); // Сброс формы
+    setProducts([]);  // Очищаем массив products
+}, [products, addRowInPdf]);
+
 
   return (
     <div className="form">
@@ -257,13 +278,21 @@ function Form({
                   key={product.id}
                   id={product.id}
                   number={index + 1}
+                  productData={product}
                   handleInputChange={handleInputChange}
                   handleRemoveProduct={handleRemoveProduct}
                 />
               ))}
             </tbody>
           </table>
-          <button type="button" onClick={handleAddProduct} className="add-product-button">Добавить товар</button>
+          
+          <button type="button" onClick={() => setShowPopup(true)} className="add-product-button">Добавить товар</button>
+          {showPopup && (
+                <ProductPopup
+                    onClose={() => setShowPopup(false)} // Закрытие popup
+                    onSave={handleAddProduct} // Передаем функцию для сохранения данных
+                />
+            )}
           <button type="submit" className="save-button">Сохранить</button>
         </form>
       </fieldset>

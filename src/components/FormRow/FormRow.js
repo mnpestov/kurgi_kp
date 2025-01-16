@@ -6,6 +6,7 @@ function FormRow({
   number,
   handleInputChange,
   handleRemoveProduct,
+  productData,
 }) {
 
   return (
@@ -20,6 +21,7 @@ function FormRow({
           onChange={handleInputChange} 
           autoComplete="off" 
           aria-label={`Наименование товара ${number}`}
+          value={productData.product}
           required
         />
       </td>
@@ -33,6 +35,7 @@ function FormRow({
           onChange={handleInputChange} 
           autoComplete="off" 
           aria-label={`Описание товара ${number}`}
+          value={productData.composition}
           required
         />
       </td>
@@ -47,6 +50,7 @@ function FormRow({
           autoComplete="off" 
           aria-label={`Вес товара ${number}`}
           min="0"
+          value={productData.productWeight}
         />
       </td>
       <td className="form__row-column-name">
@@ -56,6 +60,7 @@ function FormRow({
           id={id} 
           onChange={handleInputChange}
           aria-label={`Тип товара ${number}`}
+          value={productData.typeOfProduct}
           required
         >
           <option value="">-- Выберите тип --</option>
@@ -75,6 +80,7 @@ function FormRow({
           autoComplete="off" 
           aria-label={`Количество товара ${number}`}
           min="0"
+          value={productData.countOfProduct}
           required
         />
       </td>
@@ -89,6 +95,7 @@ function FormRow({
           autoComplete="off" 
           aria-label={`Стоимость товара ${number}`}
           min="0"
+          value={productData.priceOfProduct}
           required
         />
       </td>
