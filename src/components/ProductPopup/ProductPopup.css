@@ -31,9 +31,9 @@
     font-size: 1rem; /* 16px */
     color: black;
     display: grid;
-    grid-template-columns: 10% 1fr;
-    justify-content: start;
-    align-items: center;
+    grid-template-columns: 15% 1fr;
+    justify-content: end;
+    align-items: end;
     gap: 5px;
   }
 
