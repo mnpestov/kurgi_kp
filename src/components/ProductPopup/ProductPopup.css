@@ -11,6 +11,7 @@
 }
 
 .popup {
+    min-width: 768px;
     background-color: rgb(255, 255, 255);
     padding: 20px;
     border-radius: 10px;
@@ -34,7 +35,7 @@
     display: grid;
     grid-template-columns: 15% 1fr;
     justify-content: end;
-    align-items: end;
+    align-items: center;
     gap: 5px;
   }
 

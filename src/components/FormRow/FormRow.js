@@ -18,11 +18,12 @@ function FormRow({
           id={id} 
           placeholder="Наименование товара" 
           name="product" 
-          onChange={handleInputChange} 
+          // onChange={handleInputChange} 
           autoComplete="off" 
           aria-label={`Наименование товара ${number}`}
           value={productData.product}
           required
+          disabled
         />
       </td>
       <td className="form__row-column-name">
@@ -32,11 +33,12 @@ function FormRow({
           id={id} 
           placeholder="Описание/состав товара" 
           name="composition" 
-          onChange={handleInputChange} 
+          // onChange={handleInputChange} 
           autoComplete="off" 
           aria-label={`Описание товара ${number}`}
           value={productData.composition}
           required
+          disabled
         />
       </td>
       <td className="form__row-column-name">
@@ -46,11 +48,12 @@ function FormRow({
           id={id} 
           placeholder="Вес товара" 
           name="productWeight" 
-          onChange={handleInputChange} 
+          // onChange={handleInputChange} 
           autoComplete="off" 
           aria-label={`Вес товара ${number}`}
           min="0"
           value={productData.productWeight}
+          disabled
         />
       </td>
       <td className="form__row-column-name">
@@ -58,10 +61,11 @@ function FormRow({
           className="form__select" 
           name="typeOfProduct" 
           id={id} 
-          onChange={handleInputChange}
+          // onChange={handleInputChange}
           aria-label={`Тип товара ${number}`}
           value={productData.typeOfProduct}
           required
+          disabled
         >
           <option value="">-- Выберите тип --</option>
           <option value="eat">Еда</option>
@@ -76,12 +80,13 @@ function FormRow({
           id={id} 
           placeholder="Количество товара" 
           name="countOfProduct" 
-          onChange={handleInputChange} 
+          // onChange={handleInputChange} 
           autoComplete="off" 
           aria-label={`Количество товара ${number}`}
           min="0"
           value={productData.countOfProduct}
           required
+          disabled
         />
       </td>
       <td className="form__row-column-name">
@@ -91,12 +96,13 @@ function FormRow({
           id={id} 
           placeholder="Стоимость товара" 
           name="priceOfProduct" 
-          onChange={handleInputChange} 
+          // onChange={handleInputChange} 
           autoComplete="off" 
           aria-label={`Стоимость товара ${number}`}
           min="0"
           value={productData.priceOfProduct}
           required
+          disabled
         />
       </td>
       <td className="form__row-column-name actions">
