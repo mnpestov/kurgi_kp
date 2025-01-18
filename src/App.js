@@ -29,7 +29,7 @@ const initialState = {
     endTime: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
     eventPlace: 'МО Тюллип инн Софрино',
     countOfPerson: '600 человек',
-    logisticsCost: '10000',
+    logisticsCost: 0,
     isWithinMkad: null
   },
   listsKp: lists,
@@ -249,7 +249,7 @@ function App() {
           />
         ))}
         <Suspense fallback={<div>Загрузка Footer...</div>}>
-          <Footer lists={listsKp} countOfPerson={formData.countOfPerson} GetPrice={GetPrice} />
+          <Footer lists={listsKp} countOfPerson={formData.countOfPerson} logisticsCost={parseInt(formData.logisticsCost)} isWithinMkad={formData.isWithinMkad} GetPrice={GetPrice} />
         </Suspense>
       </div>
     </div>

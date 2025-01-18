@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './ProductPopup.css';
+import buttonCloseIcon from "../../images/closeIcon.svg"
 
 function ProductPopup({ onClose, onSave, productId }) {
     const [productData, setProductData] = useState({
@@ -101,8 +102,8 @@ function ProductPopup({ onClose, onSave, productId }) {
                         <option value="organisation">Организация</option>
                     </select>
                 </label>
-                <button className="popup__button" onClick={handleSave}>Сохранить</button>
-                <button className="popup__button popup__button_close" onClick={onClose}>Закрыть</button>
+                <button className="popup__button popup__button_save" onClick={handleSave}>Сохранить</button>
+                <button className="popup__button popup__button_close" onClick={onClose}><img className="popup__button_icon" src={buttonCloseIcon} alt="buttonCloseIcon"/></button>
             </div>
         </div>
     );

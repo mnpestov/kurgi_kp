@@ -11,7 +11,7 @@
 }
 
 .popup {
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     padding: 20px;
     border-radius: 10px;
     width: 90%; /* Ширина для мобильных */
@@ -22,6 +22,7 @@
     margin: auto 10px;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .popup__lable {
@@ -88,14 +89,28 @@
 }
 
 .popup__button_close {
-    background-color: #f44336;
+    background-color: #f4433600;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: gray;
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
     /* Красный */
 }
 
 .popup__button_close:hover {
-    background-color: #d32f2f;
+    background-color: rgba(153, 153, 153, 0.415);
+
 }
 
-.popup__button:hover {
+.popup__button_save:hover {
     background-color: #45a049;
+}
+
+.popup__button_icon {
+    width: 30px;
 }

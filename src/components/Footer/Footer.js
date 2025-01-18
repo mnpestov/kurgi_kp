@@ -2,7 +2,10 @@ import React from "react";
 import './Footer.css';
 import logo from '../../images/logo.png'
 
-function Footer({ lists, countOfPerson, GetPrice }) {
+function Footer({ lists, countOfPerson, logisticsCost, isWithinMkad, GetPrice }) {
+
+  console.log('footer ' + logisticsCost);
+
 
   const numberOfPersons = parseInt(countOfPerson, 10);
 
@@ -77,6 +80,11 @@ function Footer({ lists, countOfPerson, GetPrice }) {
               <li className="total row_count footer__row">
                 <span className="table__line tabel__line_product">-  Организация кейтеринга</span>
                 {(totals.byType.organisation) ? ' - ' + GetPrice(totals.byType.organisation.totalPrice) : ''}</li>
+              <li className="total row_count footer__row">{isWithinMkad
+                                ? <span className="table__line tabel__line_product">-  Логистика в пределах МКАД + монтаж / демонтаж</span>
+                                : <span className="table__line tabel__line_product">-  Логистика за пределами МКАД + монтаж / демонтаж</span>}
+                {/* <span className="table__line tabel__line_product">-  Логистика в пределах МКАД + монтаж / демонтаж</span> */}
+                {(totals.byType.organisation) ? ' - ' + GetPrice(logisticsCost) : ''}</li>
             </ul>
           </div>
           <div className="totalCount">

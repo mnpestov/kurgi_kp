@@ -8,7 +8,7 @@
 
 .preview {
   box-sizing: border-box;
-  padding: 1.875rem; /* 30px */
+  /* padding: 1.875rem; 30px */
   padding: 30px;
   background-color: lightgrey;
   overflow-x: auto; /* Предотвращение горизонтальной прокрутки */
