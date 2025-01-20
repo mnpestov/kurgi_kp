@@ -3,7 +3,7 @@ import './Kp.css';
 import logo from '../../images/logo.png'
 import Row from '../Row/Row'
 
-function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerson, logisticsCost, list, deleteRow, id, deleteList, isWithinMkad, GetPrice }) {
+function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerson, logisticsCost, list, deleteRow, id, deleteList, isWithinMkad, GetPrice, listTitle }) {
 
     const totalCost = list.rows.map((item) => {
         return item.countOfProduct * item.priceOfProduct
@@ -18,7 +18,7 @@ function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerso
             <div className="list">
                 <div className="list__container">
                     <img className="list__logo" src={logo} alt="logo" />
-                    <h2 className="list__title">Фудтраки StreetFOOD</h2>
+                    <h2 className="list__title">{listTitle}</h2>
                     <table className="list__table">
                         <thead>
                             <tr className="table__row table__titles">

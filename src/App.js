@@ -30,7 +30,8 @@ const initialState = {
     eventPlace: 'МО Тюллип инн Софрино',
     countOfPerson: '600 человек',
     logisticsCost: 0,
-    isWithinMkad: null
+    isWithinMkad: null,
+    listTitle: '',
   },
   listsKp: lists,
 };
@@ -152,6 +153,10 @@ function App() {
     dispatch({ type: 'UPDATE_FORM_DATA', payload: { contractDate: formattedDate } });
   }, [formatDate]);
 
+  const handleChangeListTitle = useCallback(({ target: { value } }) => {
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { listTitle: value } });
+  }, []);
+
   const handleChangeStartEvent = useCallback(({ target: { value } }) => {
     const dateObj = new Date(value);
     const formattedDate = dateObj.toLocaleDateString('ru-RU', { year: 'numeric', month: 'numeric', day: 'numeric' });
@@ -227,6 +232,7 @@ function App() {
         handleLogisticsChange={handleLogisticsChange}
         handleManagerChange={handleManagerChange}
         formData={formData}
+        handleChangeListTitle={handleChangeListTitle}
       />
       <div className="preview">
         <Header formData={formData} />
@@ -246,6 +252,7 @@ function App() {
             id={item.id}
             deleteList={deleteList}
             GetPrice={GetPrice}
+            listTitle={formData.listTitle}
           />
         ))}
         <Suspense fallback={<div>Загрузка Footer...</div>}>
