@@ -90,10 +90,10 @@ function Footer({ lists, countOfPerson, logisticsCost, isWithinMkad, GetPrice })
           <div className="totalCount">
             <p className="totalAlCash  row_count">
               <span className="table__line tabel__line_product">Итого: </span>
-              {(totals.totalPrice) ? GetPrice(totals.totalPrice) : ''}</p>
+              {(totals.totalPrice) ? GetPrice(totals.totalPrice + logisticsCost) : ''}</p>
             <p className="totalAl  row_count">
               <span className="table__line tabel__line_product">Итого по безналичному расчёту: </span>
-              {(totals.totalPrice) ? GetPrice(Math.round(totals.totalPrice * 1.07)) : ''}</p>
+              {(totals.totalPrice) ? GetPrice(Math.round((totals.totalPrice+logisticsCost) * 1.07)) : ''}</p>
           </div>
         </div>
       </div>
