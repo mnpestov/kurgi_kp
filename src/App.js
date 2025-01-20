@@ -12,67 +12,91 @@ import PeterPhoto from './images/PeterPhoto.jpg';
 // Ленивое загрузка компонента Footer
 const Footer = lazy(() => import('./components/Footer/Footer'));
 
-const initialState = {
-  formData: {
-    managerName: 'Павел Кург',
-    managerJobTitle: 'Руководитель проекта',
-    managerEmail: 'kurgi-bar@yandex.ru',
-    managerTel: '+7 925 516-31-16',
-    managerPhoto: PavelPhoto,
-    kpNumber: '111',
-    kpDate: new Date().toLocaleDateString('ru-RU'),
-    contractNumber: '111',
-    contractDate: new Date().toLocaleDateString('ru-RU'),
-    startEvent: new Date().toLocaleDateString('ru-RU'),
-    endEvent: new Date().toLocaleDateString('ru-RU'),
-    startTime: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
-    eventPlace: 'МО Тюллип инн Софрино',
-    countOfPerson: '600 человек',
-    logisticsCost: 0,
-    isWithinMkad: null,
-    listTitle: '',
-  },
-  listsKp: lists,
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case 'UPDATE_FORM_DATA':
-      return {
-        ...state,
-        formData: {
-          ...state.formData,
-          ...action.payload
-        }
-      };
-    case 'ADD_ROW_IN_PDF':
-      return {
-        ...state,
-        listsKp: [...state.listsKp, { id: state.listsKp.length + 1, rows: action.payload }]
-      };
-    case 'DELETE_ROW':
-      return {
-        ...state,
-        listsKp: state.listsKp.map(list => {
-          if (list.id === action.payload.listId) {
-            const updatedRows = list.rows.filter((_, index) => index !== action.payload.rowIndex);
-            return { ...list, rows: updatedRows };
-          }
-          return list;
-        })
-      };
-    case 'DELETE_LIST':
-      return {
-        ...state,
-        listsKp: state.listsKp.filter(obj => obj.id !== action.payload.id)
-      };
-    default:
-      return state;
-  }
-}
-
 function App() {
+  // const loadFromLocalStorage = () => {
+  //   try {
+  //     const serializedState = localStorage.getItem('commercialProposal');
+  //     if (!serializedState) return null; // Если данных нет, вернуть null
+  //     return JSON.parse(serializedState); // Преобразование строки JSON обратно в объект
+  //   } catch (error) {
+  //     console.error('Ошибка при загрузке из localStorage:', error);
+  //     return null;
+  //   }
+  // };
+
+  // Пример загрузки данных
+  // const loadedState = loadFromLocalStorage();
+  // console.log(loadedState);
+  // const initialState = loadedState
+  const initialState = {
+    formData: {
+      managerName: 'Павел Кург',
+      managerJobTitle: 'Руководитель проекта',
+      managerEmail: 'kurgi-bar@yandex.ru',
+      managerTel: '+7 925 516-31-16',
+      managerPhoto: PavelPhoto,
+      kpNumber: '111',
+      kpDate: new Date().toLocaleDateString('ru-RU'),
+      contractNumber: '111',
+      contractDate: new Date().toLocaleDateString('ru-RU'),
+      startEvent: new Date().toLocaleDateString('ru-RU'),
+      endEvent: new Date().toLocaleDateString('ru-RU'),
+      startTime: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
+      endTime: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
+      eventPlace: 'МО Тюллип инн Софрино',
+      countOfPerson: '600 человек',
+      logisticsCost: 0,
+      isWithinMkad: null,
+      listTitle: '',
+    },
+    listsKp: lists,
+  };
+
+  // const saveToLocalStorage = (state) => {
+  //   try {
+  //     const serializedState = JSON.stringify(state); // Преобразование объекта в строку JSON
+  //     localStorage.setItem('commercialProposal', serializedState); // Сохранение в localStorage
+  //     console.log('Данные успешно сохранены в localStorage');
+  //   } catch (error) {
+  //     console.error('Ошибка при сохранении в localStorage:', error);
+  //   }
+  // };
+
+  function reducer(state, action) {
+    switch (action.type) {
+      case 'UPDATE_FORM_DATA':
+        return {
+          ...state,
+          formData: {
+            ...state.formData,
+            ...action.payload
+          }
+        };
+      case 'ADD_ROW_IN_PDF':
+        return {
+          ...state,
+          listsKp: [...state.listsKp, { id: state.listsKp.length + 1, rows: action.payload }]
+        };
+      case 'DELETE_ROW':
+        return {
+          ...state,
+          listsKp: state.listsKp.map(list => {
+            if (list.id === action.payload.listId) {
+              const updatedRows = list.rows.filter((_, index) => index !== action.payload.rowIndex);
+              return { ...list, rows: updatedRows };
+            }
+            return list;
+          })
+        };
+      case 'DELETE_LIST':
+        return {
+          ...state,
+          listsKp: state.listsKp.filter(obj => obj.id !== action.payload.id)
+        };
+      default:
+        return state;
+    }
+  }
   const [state, dispatch] = useReducer(reducer, initialState);
   const { formData, listsKp } = state;
 
@@ -85,19 +109,19 @@ function App() {
   const handleManagerChange = useCallback(({ target: { value } }) => {
     const manager = value === 'true'
       ? {
-          managerPhoto: PeterPhoto,
-          managerName: 'Петр Кург',
-          managerTel: '+7 926 966-88-71',
-          managerJobTitle: 'Руководитель проекта',
-          managerEmail: 'kurgi-bar@yandex.ru'
-        }
+        managerPhoto: PeterPhoto,
+        managerName: 'Петр Кург',
+        managerTel: '+7 926 966-88-71',
+        managerJobTitle: 'Руководитель проекта',
+        managerEmail: 'kurgi-bar@yandex.ru'
+      }
       : {
-          managerPhoto: PavelPhoto,
-          managerName: 'Павел Кург',
-          managerTel: '+7 925 516-31-16',
-          managerJobTitle: 'Руководитель проекта',
-          managerEmail: 'kurgi-bar@yandex.ru'
-        };
+        managerPhoto: PavelPhoto,
+        managerName: 'Павел Кург',
+        managerTel: '+7 925 516-31-16',
+        managerJobTitle: 'Руководитель проекта',
+        managerEmail: 'kurgi-bar@yandex.ru'
+      };
 
     dispatch({ type: 'UPDATE_FORM_DATA', payload: manager });
   }, []);
@@ -186,6 +210,7 @@ function App() {
 
   // Функция экспорта в PDF
   const exportPDF = useCallback(async () => {
+    // saveToLocalStorage(state);
     const pdf = new jsPDF("landscape", "mm", "a4");
     const lists = document.querySelectorAll(".list");
 

@@ -3,10 +3,6 @@ import './Footer.css';
 import logo from '../../images/logo.png'
 
 function Footer({ lists, countOfPerson, logisticsCost, isWithinMkad, GetPrice }) {
-
-  console.log('footer ' + logisticsCost);
-
-
   const numberOfPersons = parseInt(countOfPerson, 10);
 
   // Функция для расчета итогового веса и цены
