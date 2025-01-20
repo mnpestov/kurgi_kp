@@ -51,8 +51,8 @@ function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerso
                             {/* <p className="list__logistic-cost">{isWithinMkad
                                 ? `Логистика в пределах МКАД + монтаж / демонтаж: ${GetPrice(logisticsCost)}`
                                 : `Логистика за пределами МКАД + монтаж / демонтаж: ${GetPrice(logisticsCost)}`}</p> */}
-                            <p className="list__totla-cost">{`Итоговая сумма: ${GetPrice(parseInt(totalCost) + parseInt(logisticsCost))}`}</p>
-                            <p className="list__totla-cost">{`Итого по безналичному расчёту: ${GetPrice(Math.round((parseInt(totalCost) + parseInt(logisticsCost)) * 1.07))}`}</p>
+                            <p className="list__totla-cost">{`Итоговая сумма: ${GetPrice(parseInt(totalCost))}`}</p>
+                            <p className="list__totla-cost">{`Итого по безналичному расчёту: ${GetPrice(Math.round((parseInt(totalCost)) * 1.07))}`}</p>
 
                         </div>
                     </div>
