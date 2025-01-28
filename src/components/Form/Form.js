@@ -19,6 +19,10 @@ function Form({
   handleManagerChange,
   formData,
   handleChangeListTitle,
+  handleChangeStartTimeStartEvent,
+  handleChangeEndTimeStartEvent,
+  handleChangeEndTimeEndEvent,
+  handleChangeStartTimeEndEvent,
 }) {
 
   const [showPopup, setShowPopup] = useState(false);
@@ -149,28 +153,78 @@ function Form({
             onChange={handleChangeListTitle}
             required
           />
-          <label htmlFor="startEvent" className="label">Дата начала мероприятия</label>
-          <input
-            id="startEvent"
-            className="input"
-            type="datetime-local"
-            name="startEvent"
-            min="2000-01-01T00:00"
-            max="2030-12-31T23:59"
-            onChange={handleChangeStartEvent}
-            required
-          />
-          <label htmlFor="endEvent" className="label">Дата окончания мероприятия</label>
-          <input
-            id="endEvent"
-            className="input"
-            type="datetime-local"
-            name="endEvent"
-            min="2000-01-01T00:00"
-            max="2030-12-31T23:59"
-            onChange={handleChangeEndEvent}
-            required
-          />
+          <label htmlFor="startEvent" className="label">Дата начала мероприятия
+            <input
+              id="startEvent"
+              className="input"
+              type="date"
+              name="startEvent"
+              min="2000-01-01"
+              max="2030-12-31"
+              onChange={handleChangeStartEvent}
+              required
+            />
+            <div className="inputTime">
+              C
+              <input
+                id="startTimeStartEvent"
+                className="input"
+                type="time"
+                name="startTimeStartEvent"
+                min="00:00"
+                max="23:59"
+                onChange={handleChangeStartTimeStartEvent}
+                required
+              />
+              по
+              <input
+                id="endTimeStartEvent"
+                className="input"
+                type="time"
+                name="endTimeStartEvent"
+                min="00:00"
+                max="23:59"
+                onChange={handleChangeEndTimeStartEvent}
+                required
+              />
+            </div>
+          </label>
+          <label htmlFor="endEvent" className="label">Дата окончания мероприятия
+            <input
+              id="endEvent"
+              className="input"
+              type="date"
+              name="endEvent"
+              min="2000-01-01T00:00"
+              max="2030-12-31T23:59"
+              onChange={handleChangeEndEvent}
+              required
+            />
+            <div className="inputTime">
+              C
+              <input
+                id="startTimeEndEvent"
+                className="input"
+                type="time"
+                name="startTimeEndEvent"
+                min="00:00"
+                max="23:59"
+                onChange={handleChangeStartTimeEndEvent}
+                required
+              />
+              по
+              <input
+                id="endTimeEndEvent"
+                className="input"
+                type="time"
+                name="endTimeEndEvent"
+                min="00:00"
+                max="23:59"
+                onChange={handleChangeEndTimeEndEvent}
+                required
+              />
+            </div>
+          </label>
           <label htmlFor="eventPlace" className="label">Место проведения</label>
           <input
             id="eventPlace"
@@ -266,9 +320,9 @@ function Form({
         </div>
         {/* Менеджер */}
 
-      </fieldset>
+      </fieldset >
       {/* Товары */}
-      <fieldset className="form__products">
+      < fieldset className="form__products" >
         <h2 className="form__title">Товары</h2>
         <form id="form" className="form__row" onSubmit={addRow}>
           <table>
@@ -306,9 +360,9 @@ function Form({
           )}
           <button type="submit" className="save-button">Сохранить</button>
         </form>
-      </fieldset>
+      </fieldset >
       <button onClick={downloadPDF} className="download-button">Скачать PDF</button>
-    </div>
+    </div >
   );
 }
 

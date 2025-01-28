@@ -46,6 +46,10 @@ function App() {
       endEvent: new Date().toISOString().split('T')[0],
       startTime: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
       endTime: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
+      startTimeStartEvent: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
+      endTimeStartEvent: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
+      startTimeEndEvent: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
+      endTimeEndEvent: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
       eventPlace: '',
       countOfPerson: '',
       logisticsCost: 0,
@@ -173,17 +177,26 @@ function App() {
   }, []);
 
   const handleChangeStartEvent = useCallback(({ target: { value } }) => {
-    const dateObj = new Date(value);
     const formattedDate = value.split('T')[0];
-    const formattedTime = dateObj.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { startEvent: formattedDate, startTime: formattedTime } });
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { startEvent: formattedDate } });
+  }, []);
+
+  const handleChangeStartTimeStartEvent = useCallback(({ target: { value } }) => {
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { startTimeStartEvent: value } });
+  }, []);
+  const handleChangeEndTimeStartEvent = useCallback(({ target: { value } }) => {
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { endTimeStartEvent: value } });
+  }, []);
+  const handleChangeStartTimeEndEvent = useCallback(({ target: { value } }) => {
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { startTimeEndEvent: value } });
+  }, []);
+  const handleChangeEndTimeEndEvent = useCallback(({ target: { value } }) => {
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { endTimeEndEvent: value } });
   }, []);
 
   const handleChangeEndEvent = useCallback(({ target: { value } }) => {
-    const dateObj = new Date(value);
     const formattedDate = value.split('T')[0];
-    const formattedTime = dateObj.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { endEvent: formattedDate, endTime: formattedTime } });
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { endEvent: formattedDate} });
   }, []);
 
   const handleChangeEventPlace = useCallback(({ target: { value } }) => {
@@ -250,6 +263,10 @@ function App() {
         handleManagerChange={handleManagerChange}
         formData={formData}
         handleChangeListTitle={handleChangeListTitle}
+        handleChangeStartTimeStartEvent={handleChangeStartTimeStartEvent}
+        handleChangeEndTimeStartEvent={handleChangeEndTimeStartEvent}
+        handleChangeStartTimeEndEvent={handleChangeStartTimeEndEvent}
+        handleChangeEndTimeEndEvent={handleChangeEndTimeEndEvent}
       />
       <div className="preview">
         <Header
@@ -277,6 +294,10 @@ function App() {
             deleteList={deleteList}
             GetPrice={GetPrice}
             listTitle={formData.listTitle}
+            startTimeStartEvent={formData.startTimeStartEvent}
+            endTimeStartEvent={formData.endTimeStartEvent}
+            startTimeEndEvent={formData.startTimeEndEvent}
+            endTimeEndEvent={formData.endTimeEndEvent}
           />
         ))}
         <Suspense fallback={<div>Загрузка Footer...</div>}>

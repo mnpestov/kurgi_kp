@@ -3,7 +3,23 @@ import './Kp.css';
 import logo from '../../images/logo.png'
 import Row from '../Row/Row'
 
-function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerson, list, deleteRow, id, deleteList, GetPrice, listTitle }) {
+function Kp({ startEvent,
+    endEvent,
+    startTime,
+    endTime,
+    eventPlace,
+    countOfPerson,
+    list,
+    deleteRow,
+    id,
+    deleteList,
+    GetPrice,
+    listTitle,
+    startTimeStartEvent,
+    endTimeStartEvent,
+    startTimeEndEvent,
+    endTimeEndEvent,
+}) {
 
     const totalCost = list.rows.map((item) => {
         return item.countOfProduct * item.priceOfProduct
@@ -23,9 +39,18 @@ function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerso
                         <thead>
                             <tr className="table__row table__titles">
                                 <th className="table__title list__subtitle-container">
-                                    <p className="list__subtitle list__subtitle_place">{`${startEvent} - ${endEvent} место: ${eventPlace};`}</p>
-                                    <p className="list__subtitle list__subtitle_person">{`кол-во персон: ${countOfPerson}`}</p>
-                                    <p className="list__subtitle list__subtitle_time">{`время мероприятия: ${startTime.slice(-6)} (${startEvent.slice(0, 5)}) - ${endTime.slice(-6)} (${endEvent.slice(0, 5)}) `}</p>
+                                    <p className="list__subtitle list__subtitle_place">место: <span className="list__subtitle_text">{`${eventPlace}`}</span></p>
+                                    <p className="list__subtitle list__subtitle_person">кол-во персон: <span className="list__subtitle_text">{`${countOfPerson}`}</span></p>
+                                    <div className="list__subtitle_time">
+                                        <p className="list__subtitle list__subtitle_time_text">время мероприятия: </p>
+                                        <p>
+                                        <span className="list__subtitle_time_text list__subtitle_text">{`${startEvent.slice(0, 5)} (${startTimeStartEvent} - ${endTimeStartEvent})`}</span>
+                                        <span className="list__subtitle_time_text list__subtitle_text"> {`\u2013`} </span> 
+                                        <span className="list__subtitle_time_text list__subtitle_text">{`${endEvent.slice(0, 5)} (${startTimeEndEvent} - ${endTimeEndEvent})`}</span>
+                                        </p>
+                                         
+                                    </div>
+
                                 </th>
                                 <th className="table__title">
                                     Количество, шт

@@ -13,6 +13,12 @@
   color: gray;
 }
 
+.inputTime {
+  display: flex;
+  gap: 5px;
+  align-items: end;
+}
+
 .form__details {
   display: flex;
   gap: 2.5rem; /* 40px */
