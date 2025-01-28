@@ -2,18 +2,8 @@ import React from "react";
 import './Header.css';
 import logo from '../../images/logo.png'
 
-function Header({ formData }) {
-    const {
-        managerName,
-        managerJobTitle,
-        managerEmail,
-        managerTel,
-        kpNumber,
-        kpDate,
-        contractNumber,
-        contractDate,
-        managerPhoto
-    } = formData
+function Header({ managerName, managerJobTitle, managerEmail, managerTel, kpNumber, kpDate, contractNumber, contractDate, managerPhoto }) {
+
     return (
         <section className="header">
             <div className="list">

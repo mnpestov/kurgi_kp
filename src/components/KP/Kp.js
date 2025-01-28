@@ -3,7 +3,7 @@ import './Kp.css';
 import logo from '../../images/logo.png'
 import Row from '../Row/Row'
 
-function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerson, logisticsCost, list, deleteRow, id, deleteList, isWithinMkad, GetPrice, listTitle }) {
+function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerson, list, deleteRow, id, deleteList, GetPrice, listTitle }) {
 
     const totalCost = list.rows.map((item) => {
         return item.countOfProduct * item.priceOfProduct
@@ -47,18 +47,16 @@ function Kp({ startEvent, endEvent, startTime, endTime, eventPlace, countOfPerso
                             <p className="list__footnote">*В стоимость включены все расходники.</p>
                         </div>
                         <div className="list__total">
-                            <p className="list__subtotla">{`Сумма: ${GetPrice(totalCost)}`}</p>
-                            {/* <p className="list__logistic-cost">{isWithinMkad
-                                ? `Логистика в пределах МКАД + монтаж / демонтаж: ${GetPrice(logisticsCost)}`
-                                : `Логистика за пределами МКАД + монтаж / демонтаж: ${GetPrice(logisticsCost)}`}</p> */}
+                            {/* <p className="list__subtotla">{`Сумма: ${GetPrice(totalCost)}`}</p> */}
                             <p className="list__totla-cost">{`Итоговая сумма: ${GetPrice(parseInt(totalCost))}`}</p>
-                            <p className="list__totla-cost">{`Итого по безналичному расчёту: ${GetPrice(Math.round((parseInt(totalCost)) * 1.07))}`}</p>
+                            {/* <p className="list__totla-cost">{`Итого по безналичному расчёту: ${GetPrice(Math.round((parseInt(totalCost)) * 1.07))}`}</p> */}
 
                         </div>
                     </div>
                 </div>
             </div>
             <button type="button" className="list-button  button__list_delete remove-button" onClick={deleteL}>Удалить лист</button>
+            {/* <button type="button" className="list-button  button__list_delete edit-button">Редактировать лист</button> */}
         </>
     );
 }

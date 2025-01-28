@@ -8,26 +8,29 @@ import Kp from './components/KP/Kp';
 import { lists } from './utils/const';
 import PavelPhoto from './images/PavelPhoto.png';
 import PeterPhoto from './images/PeterPhoto.jpg';
+import { MainApi } from './utils/MainApi'
 
 // Ленивое загрузка компонента Footer
 const Footer = lazy(() => import('./components/Footer/Footer'));
 
-function App() {
-  // const loadFromLocalStorage = () => {
-  //   try {
-  //     const serializedState = localStorage.getItem('commercialProposal');
-  //     if (!serializedState) return null; // Если данных нет, вернуть null
-  //     return JSON.parse(serializedState); // Преобразование строки JSON обратно в объект
-  //   } catch (error) {
-  //     console.error('Ошибка при загрузке из localStorage:', error);
-  //     return null;
-  //   }
-  // };
 
-  // Пример загрузки данных
-  // const loadedState = loadFromLocalStorage();
-  // console.log(loadedState);
-  // const initialState = loadedState
+function App() {
+  // const [curentKp, setCurentKp] = useState({})
+  // const [curentLists, setCurentLists] = useState([])
+  // const [curentRow, setCurentRow] = useState([])
+
+  const addToDb = async (formData, listsKp) => {
+    // const kpRes = await MainApi.addKp(formData).catch((err) => console.log('Ошибка: ' + err))
+    // if (listsKp) {
+    //   listsKp.forEach(async (list) => {
+    //     const listRes = await MainApi.addList({ ...formData, kpId: kpRes.id }).catch((err) => console.log('Ошибка: ' + err))
+    //     list.rows.forEach(async (row) => {
+    //       await MainApi.addRow({ ...row, listId: listRes.id })
+    //     })
+    //   });
+    // }
+  }
+
   const initialState = {
     formData: {
       managerName: 'Павел Кург',
@@ -35,32 +38,22 @@ function App() {
       managerEmail: 'kurgi-bar@yandex.ru',
       managerTel: '+7 925 516-31-16',
       managerPhoto: PavelPhoto,
-      kpNumber: '111',
-      kpDate: new Date().toLocaleDateString('ru-RU'),
-      contractNumber: '111',
-      contractDate: new Date().toLocaleDateString('ru-RU'),
-      startEvent: new Date().toLocaleDateString('ru-RU'),
-      endEvent: new Date().toLocaleDateString('ru-RU'),
+      kpNumber: '',
+      kpDate: new Date().toISOString().split('T')[0],
+      contractNumber: '',
+      contractDate: new Date().toISOString().split('T')[0],
+      startEvent: new Date().toISOString().split('T')[0],
+      endEvent: new Date().toISOString().split('T')[0],
       startTime: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
       endTime: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
-      eventPlace: 'МО Тюллип инн Софрино',
-      countOfPerson: '600 человек',
+      eventPlace: '',
+      countOfPerson: '',
       logisticsCost: 0,
       isWithinMkad: null,
       listTitle: '',
     },
     listsKp: lists,
   };
-
-  // const saveToLocalStorage = (state) => {
-  //   try {
-  //     const serializedState = JSON.stringify(state); // Преобразование объекта в строку JSON
-  //     localStorage.setItem('commercialProposal', serializedState); // Сохранение в localStorage
-  //     console.log('Данные успешно сохранены в localStorage');
-  //   } catch (error) {
-  //     console.error('Ошибка при сохранении в localStorage:', error);
-  //   }
-  // };
 
   function reducer(state, action) {
     switch (action.type) {
@@ -164,18 +157,16 @@ function App() {
   }, []);
 
   const handleChangeKpDate = useCallback(({ target: { value } }) => {
-    const formattedDate = formatDate(value);
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { kpDate: formattedDate } });
-  }, [formatDate]);
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { kpDate: value } });
+  }, []);
 
   const handleChangeContractNumber = useCallback(({ target: { value } }) => {
     dispatch({ type: 'UPDATE_FORM_DATA', payload: { contractNumber: value } });
   }, []);
 
   const handleChangeContractDate = useCallback(({ target: { value } }) => {
-    const formattedDate = formatDate(value);
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { contractDate: formattedDate } });
-  }, [formatDate]);
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { contractDate: value } });
+  }, []);
 
   const handleChangeListTitle = useCallback(({ target: { value } }) => {
     dispatch({ type: 'UPDATE_FORM_DATA', payload: { listTitle: value } });
@@ -183,14 +174,14 @@ function App() {
 
   const handleChangeStartEvent = useCallback(({ target: { value } }) => {
     const dateObj = new Date(value);
-    const formattedDate = dateObj.toLocaleDateString('ru-RU', { year: 'numeric', month: 'numeric', day: 'numeric' });
+    const formattedDate = value.split('T')[0];
     const formattedTime = dateObj.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
     dispatch({ type: 'UPDATE_FORM_DATA', payload: { startEvent: formattedDate, startTime: formattedTime } });
   }, []);
 
   const handleChangeEndEvent = useCallback(({ target: { value } }) => {
     const dateObj = new Date(value);
-    const formattedDate = dateObj.toLocaleDateString('ru-RU', { year: 'numeric', month: 'numeric', day: 'numeric' });
+    const formattedDate = value.split('T')[0];
     const formattedTime = dateObj.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
     dispatch({ type: 'UPDATE_FORM_DATA', payload: { endEvent: formattedDate, endTime: formattedTime } });
   }, []);
@@ -210,7 +201,7 @@ function App() {
 
   // Функция экспорта в PDF
   const exportPDF = useCallback(async () => {
-    // saveToLocalStorage(state);
+
     const pdf = new jsPDF("landscape", "mm", "a4");
     const lists = document.querySelectorAll(".list");
 
@@ -225,7 +216,8 @@ function App() {
     }
 
     pdf.save("lists.pdf");
-  }, []);
+    addToDb(state.formData, state.listsKp)
+  }, [state.formData, state.listsKp]);
 
   // Функции добавления и удаления строк/списков
   const addRowInPdf = useCallback((newObj) => {
@@ -260,18 +252,25 @@ function App() {
         handleChangeListTitle={handleChangeListTitle}
       />
       <div className="preview">
-        <Header formData={formData} />
+        <Header
+          managerName={formData.managerName}
+          managerJobTitle={formData.managerJobTitle}
+          managerEmail={formData.managerEmail}
+          managerTel={formData.managerTel}
+          kpNumber={formData.kpNumber}
+          kpDate={formatDate(formData.kpDate)}
+          contractNumber={formData.contractNumber}
+          contractDate={formatDate(formData.contractDate)}
+          managerPhoto={formData.managerPhoto} />
         {listsKp.map((item) => (
           <Kp
             key={item.id}
-            startEvent={formData.startEvent}
-            endEvent={formData.endEvent}
+            startEvent={formatDate(formData.startEvent)}
+            endEvent={formatDate(formData.endEvent)}
             startTime={formData.startTime}
             endTime={formData.endTime}
             eventPlace={formData.eventPlace}
             countOfPerson={formData.countOfPerson}
-            logisticsCost={formData.logisticsCost}
-            isWithinMkad={formData.isWithinMkad}
             list={item}
             deleteRow={deleteRow}
             id={item.id}
@@ -281,7 +280,12 @@ function App() {
           />
         ))}
         <Suspense fallback={<div>Загрузка Footer...</div>}>
-          <Footer lists={listsKp} countOfPerson={formData.countOfPerson} logisticsCost={parseInt(formData.logisticsCost)} isWithinMkad={formData.isWithinMkad} GetPrice={GetPrice} />
+          <Footer
+            lists={listsKp}
+            countOfPerson={formData.countOfPerson}
+            logisticsCost={parseInt(formData.logisticsCost)}
+            isWithinMkad={formData.isWithinMkad}
+            GetPrice={GetPrice} />
         </Suspense>
       </div>
     </div>

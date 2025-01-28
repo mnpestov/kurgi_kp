@@ -18,7 +18,7 @@ function ProductPopup({ onClose, onSave, productId }) {
         setProductData(prevData => ({ ...prevData, [name]: value }));
     };
 
-    const handleSave = () => {
+    const handleSave = () => {        
         onSave(productData); // Save the data in parent component
         onClose(); // Close the popup after saving
     };
@@ -37,6 +37,7 @@ function ProductPopup({ onClose, onSave, productId }) {
                         name="product"
                         value={productData.product}
                         onChange={handleChange}
+                        required
                     />
                 </label>
                 <label className="popup__lable">
@@ -57,7 +58,7 @@ function ProductPopup({ onClose, onSave, productId }) {
                     </span>
                     <input
                         className="popup__input"
-                        type="text"
+                        type="number"
                         name="productWeight"
                         value={productData.productWeight}
                         onChange={handleChange}
@@ -73,6 +74,7 @@ function ProductPopup({ onClose, onSave, productId }) {
                         name="countOfProduct"
                         value={productData.countOfProduct}
                         onChange={handleChange}
+                        required
                     />
                 </label>
                 <label className="popup__lable">
@@ -85,6 +87,7 @@ function ProductPopup({ onClose, onSave, productId }) {
                         name="priceOfProduct"
                         value={productData.priceOfProduct}
                         onChange={handleChange}
+                        required
                     />
                 </label>
                 <label className="popup__lable">
