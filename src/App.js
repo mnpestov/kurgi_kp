@@ -159,7 +159,6 @@ function App() {
 
   const searchKp = async (kpNumber) => {
     const curentKp = {formData: JSON.parse(localStorage.getItem('formData')), listsKp: JSON.parse(localStorage.getItem('listsKp'))}
-    console.log(curentKp);
     updateCurrentKp(curentKp)
     
     // try {
