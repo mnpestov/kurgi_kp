@@ -158,13 +158,17 @@ function App() {
   }
 
   const searchKp = async (kpNumber) => {
-    try {
-      // const curentKp = await MainApi.getKp(kpNumber);
-      // updateCurrentKp(curentKp);
+    const curentKp = {formData: JSON.parse(localStorage.getItem('formData')), listsKp: JSON.parse(localStorage.getItem('listsKp'))}
+    console.log(curentKp);
+    updateCurrentKp(curentKp)
+    
+    // try {
+    //   const curentKp = await MainApi.getKp(kpNumber);
+    //   updateCurrentKp(curentKp);
       
-    } catch (err) {
-      console.log('Ошибка: ' + err);
-    }
+    // } catch (err) {
+    //   console.log('Ошибка: ' + err);
+    // }
   };
 
   const updateCurrentKp = useCallback((kpData) => {
@@ -262,6 +266,8 @@ function App() {
     }
     pdf.save(`КП № ${state.formData.kpNumber} от ${state.formData.kpDate}.pdf`);
     // addToDb(state.formData, state.listsKp)
+    localStorage.setItem('formData', JSON.stringify(state.formData))
+    localStorage.setItem('listsKp', JSON.stringify(state.listsKp))
   }, [state.formData, state.listsKp]);
 
   // Функции добавления и удаления строк/списков

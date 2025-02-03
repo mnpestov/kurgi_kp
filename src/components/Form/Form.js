@@ -14,41 +14,41 @@ function Form({
   const [showPopup, setShowPopup] = useState(false);
   const [products, setProducts] = useState([]);
   const [request, setReq] = useState('')
-  const [isValid, setIsValid] = useState(false)
-  const [formValues, setFormValues] = useState({});
-  const [errors, setErrors] = useState({});
+  // const [isValid, setIsValid] = useState(false)
+  // const [formValues, setFormValues] = useState({});
+  // const [errors, setErrors] = useState({});
   
-  const handleInputChange2 = (e) => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
-    console.log();
+  // const handleInputChange2 = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormValues({ ...formValues, [name]: value });
+  //   console.log();
     
-    validateForm()
-  }
+  //   validateForm()
+  // }
 
-  const validateForm = () => {
-    let newErrors = {};
+  // const validateForm = () => {
+  //   let newErrors = {};
   
-    if (!formValues.startEvent) {
-      newErrors.startEvent = "Введите дату начала";
-      setIsValid(false)
-    } else {
-      setIsValid(true)
-    }
-    if (!formValues.endDate) {
-      newErrors.endEvent = "Введите дату окончания";
-      setIsValid(false)
-    } else {
-      setIsValid(true)
-    }
-    if (formValues.startEvent && formValues.endEvent && formValues.startEvent > formValues.endEvent) {
-      newErrors.endEvent = "Дата окончания не может быть раньше даты начала";
-      setIsValid(false)
-    } else {
-      setIsValid(true)
-    }
-    setErrors(newErrors);
-  };
+  //   if (!formValues.startEvent) {
+  //     newErrors.startEvent = "Введите дату начала";
+  //     setIsValid(false)
+  //   } else {
+  //     setIsValid(true)
+  //   }
+  //   if (!formValues.endDate) {
+  //     newErrors.endEvent = "Введите дату окончания";
+  //     setIsValid(false)
+  //   } else {
+  //     setIsValid(true)
+  //   }
+  //   if (formValues.startEvent && formValues.endEvent && formValues.startEvent > formValues.endEvent) {
+  //     newErrors.endEvent = "Дата окончания не может быть раньше даты начала";
+  //     setIsValid(false)
+  //   } else {
+  //     setIsValid(true)
+  //   }
+  //   setErrors(newErrors);
+  // };
 
   const handleSearchKp = () => {
     searchKp(request)
@@ -124,6 +124,10 @@ function Form({
           <button type="button" className="search__btn" onClick={handleSearchKp}></button>
         </div>
       </fieldset> */}
+      <fieldset className="form__search">
+        <span>Загрузить последнее КП?</span>
+          <button type="button" className="search__btn_in-localStorage" onClick={handleSearchKp}>Загрузить</button>
+      </fieldset>
       <fieldset className="form__details">
         {/* Реквизиты КП */}
         <div className="form__detail">

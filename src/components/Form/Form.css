@@ -50,6 +50,23 @@
   opacity: 0.7;
 }
 
+.search__btn_in-localStorage{
+  background-color: #008CBA;
+  /* Синий */
+  margin-right: 1rem;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 0.25rem;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+.search__btn_in-localStorage:hover {
+  opacity: 0.7;
+}
+
 .form__title {
   margin-bottom: 0.5rem;
   font-family: Arial, sans-serif;
