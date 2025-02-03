@@ -84,6 +84,8 @@ function Form({
   }, []);
 
   const handleAddProduct = (productData) => {
+    console.log('add');
+    
     setProducts((prevProducts) => [
       ...prevProducts,
       {
@@ -156,7 +158,7 @@ function Form({
               type="text"
               placeholder="Contract number"
               name="contractNumber"
-              onChange={handleInputChange}
+              onChange={handleChangeInput}
               required
             />
           </label>
@@ -197,7 +199,7 @@ function Form({
               name="startEvent"
               min="2000-01-01"
               max="2030-12-31"
-              onChange={handleInputChange}
+              onChange={handleChangeInput}
               required
             />
             <div className="inputTime">
@@ -233,7 +235,7 @@ function Form({
               name="endEvent"
               min="2000-01-01T00:00"
               max="2030-12-31T23:59"
-              onChange={handleInputChange}
+              onChange={handleChangeInput}
               required
             />
             <div className="inputTime">
