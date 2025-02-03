@@ -1,11 +1,10 @@
 import './App.css';
-import React, { useReducer, useCallback, Suspense, lazy } from "react";
+import React, { useReducer, useCallback, Suspense, lazy, useState } from "react";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Form from './components/Form/Form';
 import Header from './components/Header/Header';
 import Kp from './components/KP/Kp';
-import { lists } from './utils/const';
 import PavelPhoto from './images/PavelPhoto.png';
 import PeterPhoto from './images/PeterPhoto.jpg';
 import { MainApi } from './utils/MainApi'
@@ -15,49 +14,40 @@ const Footer = lazy(() => import('./components/Footer/Footer'));
 
 
 function App() {
-  // const [curentKp, setCurentKp] = useState({})
-  // const [curentLists, setCurentLists] = useState([])
-  // const [curentRow, setCurentRow] = useState([])
-
-  const addToDb = async (formData, listsKp) => {
-    // const kpRes = await MainApi.addKp(formData).catch((err) => console.log('Ошибка: ' + err))
-    // if (listsKp) {
-    //   listsKp.forEach(async (list) => {
-    //     const listRes = await MainApi.addList({ ...formData, kpId: kpRes.id }).catch((err) => console.log('Ошибка: ' + err))
-    //     list.rows.forEach(async (row) => {
-    //       await MainApi.addRow({ ...row, listId: listRes.id })
-    //     })
-    //   });
-    // }
-  }
+  const [isNewKp, setIsNewKp] = useState(true)
+  const [updetedRows, setUpdatedRows] = useState([])
 
   const initialState = {
     formData: {
-      managerName: 'Павел Кург',
-      managerJobTitle: 'Руководитель проекта',
-      managerEmail: 'kurgi-bar@yandex.ru',
-      managerTel: '+7 925 516-31-16',
-      managerPhoto: PavelPhoto,
-      kpNumber: '',
-      kpDate: new Date().toISOString().split('T')[0],
-      contractNumber: '',
-      contractDate: new Date().toISOString().split('T')[0],
-      startEvent: new Date().toISOString().split('T')[0],
-      endEvent: new Date().toISOString().split('T')[0],
-      startTime: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
-      endTime: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
-      startTimeStartEvent: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
-      endTimeStartEvent: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
-      startTimeEndEvent: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
-      endTimeEndEvent: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
-      eventPlace: '',
-      countOfPerson: '',
-      logisticsCost: 0,
-      isWithinMkad: null,
-      listTitle: '',
+      // id: '1',
+      // managerName: 'Павел Кург',
+      // managerJobTitle: 'Руководитель проекта',
+      // managerEmail: 'kurgi-bar@yandex.ru',
+      // managerTel: '+7 925 516-31-16',
+      // managerPhoto: PavelPhoto,
+      // kpNumber: '',
+      // kpDate: new Date().toISOString().split('T')[0],
+      // contractNumber: '',
+      // contractDate: new Date().toISOString().split('T')[0],
+      // startEvent: new Date().toISOString().split('T')[0],
+      // endEvent: new Date().toISOString().split('T')[0],
+      // startTime: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
+      // endTime: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
+      // startTimeStartEvent: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
+      // endTimeStartEvent: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
+      // startTimeEndEvent: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
+      // endTimeEndEvent: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
+      // eventPlace: '',
+      // countOfPerson: '',
+      // logisticsCost: 0,
+      // isWithinMkad: null,
+      // listTitle: '',
     },
-    listsKp: lists,
+    listsKp: [],
   };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { formData, listsKp } = state;
 
   function reducer(state, action) {
     switch (action.type) {
@@ -68,6 +58,11 @@ function App() {
             ...state.formData,
             ...action.payload
           }
+        };
+      case 'UPDATE_LISTS':
+        return {
+          ...state,
+          listsKp: action.payload
         };
       case 'ADD_ROW_IN_PDF':
         return {
@@ -85,6 +80,22 @@ function App() {
             return list;
           })
         };
+      case 'UPDATE_ROW':
+        setUpdatedRows([...updetedRows, action.payload.updatedRow])
+        return {
+          ...state,
+          listsKp: state.listsKp.map(list => {
+            if (list.id === action.payload.listId) {
+              return {
+                ...list,
+                rows: list.rows.map((row, index) =>
+                  index === action.payload.rowIndex ? action.payload.updatedRow : row
+                )
+              };
+            }
+            return list;
+          })
+        };
       case 'DELETE_LIST':
         return {
           ...state,
@@ -94,12 +105,113 @@ function App() {
         return state;
     }
   }
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const { formData, listsKp } = state;
+
+  // Форматирование даты
+  const formatDate = useCallback((value, options = { year: 'numeric', month: 'numeric', day: 'numeric' }) => {
+    const enteredDate = new Date(value);
+    return enteredDate.toLocaleDateString('ru-RU', options);
+  }, []);
+  // Форматирование времени
+  const formatTime = (timeString) => {
+    if (!timeString) return '';
+    return timeString.slice(0, 5); // Оставляем только HH:MM
+  };
 
   // Форматирование цены
   const GetPrice = useCallback((price) => {
     return `${Math.round(price).toLocaleString('ru-RU')} руб`;
+  }, []);
+
+  // Корректное склонение слова "человек"
+  const getDeclination = useCallback((num) => {
+    const n = parseInt(num, 10);
+    const remainder10 = n % 10;
+    const remainder100 = n % 100;
+    if (remainder100 >= 11 && remainder100 <= 14) {
+      return `${n} человек`;
+    }
+    if (remainder10 === 1) {
+      return `${n} человек`;
+    }
+    if (remainder10 >= 2 && remainder10 <= 4) {
+      return `${n} человека`;
+    }
+    return `${n} человек`;
+  }, []);
+
+  const addToDb = async (formData, listsKp) => {
+    if (isNewKp) {
+      const kpRes = await MainApi.addKp(formData).catch((err) => console.log('Ошибка: ' + err))
+      if (listsKp) {
+        listsKp.forEach(async (list) => {
+          const listRes = await MainApi.addList({ ...formData, kpId: kpRes.id }).catch((err) => console.log('Ошибка: ' + err))
+          list.rows.forEach(async (row) => {
+            await MainApi.addRow({ ...row, listId: listRes.id }).catch((err) => console.log('Ошибка: ' + err))
+          })
+        });
+      }
+    } else {
+      updetedRows.forEach(async (updetedRow) => {
+        await MainApi.updateRow(updetedRow).catch((err) => console.log('Ошибка: ' + err))
+      })
+    }
+  }
+
+  const searchKp = async (kpNumber) => {
+    try {
+      // const curentKp = await MainApi.getKp(kpNumber);
+      // updateCurrentKp(curentKp);
+      
+    } catch (err) {
+      console.log('Ошибка: ' + err);
+    }
+  };
+
+  const updateCurrentKp = useCallback((kpData) => {
+    if (!kpData) return;
+    setIsNewKp(false)
+    let managerInfo = {
+      managerPhoto: '',
+      managerName: kpData.formData.managerName || '',
+      managerTel: '',
+      managerJobTitle: '',
+      managerEmail: ''
+    };
+    if (kpData.formData.managerName === 'Петр Кург') {
+      managerInfo = {
+        managerPhoto: PeterPhoto,
+        managerName: 'Петр Кург',
+        managerTel: '+7 926 966-88-71',
+        managerJobTitle: 'Руководитель проекта',
+        managerEmail: 'kurgi-bar@yandex.ru'
+      };
+    } else {
+      managerInfo = {
+        managerPhoto: PavelPhoto,
+        managerName: 'Павел Кург',
+        managerTel: '+7 925 516-31-16',
+        managerJobTitle: 'Руководитель проекта',
+        managerEmail: 'kurgi-bar@yandex.ru'
+      };
+    }
+    dispatch({
+      type: 'UPDATE_FORM_DATA',
+      payload: {
+        ...kpData.formData,
+        ...managerInfo,
+        startTimeStartEvent: formatTime(kpData.formData.startTimeStartEvent),
+        endTimeStartEvent: formatTime(kpData.formData.endTimeStartEvent),
+        startTimeEndEvent: formatTime(kpData.formData.startTimeEndEvent),
+        endTimeEndEvent: formatTime(kpData.formData.endTimeEndEvent),
+      }
+    });
+    dispatch({
+      type: 'UPDATE_LISTS',
+      payload: kpData.listsKp.map(list => ({
+        ...list,
+        rows: list.rows.sort((a, b) => a.id - b.id) // Сортируем строки по id
+      }))
+    });
   }, []);
 
   // Обработчик смены менеджера
@@ -119,105 +231,26 @@ function App() {
         managerJobTitle: 'Руководитель проекта',
         managerEmail: 'kurgi-bar@yandex.ru'
       };
-
     dispatch({ type: 'UPDATE_FORM_DATA', payload: manager });
   }, []);
 
-  // Обработчик смены логистики
-  const handleLogisticsChange = useCallback(({ target: { value } }) => {
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { isWithinMkad: value === "true" } });
-  }, []);
-
-  // Форматирование даты
-  const formatDate = useCallback((value, options = { year: 'numeric', month: 'numeric', day: 'numeric' }) => {
-    const enteredDate = new Date(value);
-    return enteredDate.toLocaleDateString('ru-RU', options);
-  }, []);
-
-  // Корректное склонение слова "человек"
-  const getDeclination = useCallback((num) => {
-    const n = parseInt(num, 10);
-    const remainder10 = n % 10;
-    const remainder100 = n % 100;
-
-    if (remainder100 >= 11 && remainder100 <= 14) {
-      return `${n} человек`;
+  // Обработчик изменений полей формы
+  const handleChangeInput = useCallback(({ target: { value, name } }) => {
+    let data
+    if (name === 'countOfPerson') {
+      data = getDeclination(value)
+    } else if (name === 'isWithinMkad') {
+      data = value === "true"
+    } else {
+      data = value
     }
-
-    if (remainder10 === 1) {
-      return `${n} человек`;
-    }
-
-    if (remainder10 >= 2 && remainder10 <= 4) {
-      return `${n} человека`;
-    }
-
-    return `${n} человек`;
-  }, []);
-
-  // Обработчики изменений полей формы
-  const handleChangeKpNumber = useCallback(({ target: { value } }) => {
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { kpNumber: value } });
-  }, []);
-
-  const handleChangeKpDate = useCallback(({ target: { value } }) => {
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { kpDate: value } });
-  }, []);
-
-  const handleChangeContractNumber = useCallback(({ target: { value } }) => {
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { contractNumber: value } });
-  }, []);
-
-  const handleChangeContractDate = useCallback(({ target: { value } }) => {
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { contractDate: value } });
-  }, []);
-
-  const handleChangeListTitle = useCallback(({ target: { value } }) => {
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { listTitle: value } });
-  }, []);
-
-  const handleChangeStartEvent = useCallback(({ target: { value } }) => {
-    const formattedDate = value.split('T')[0];
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { startEvent: formattedDate } });
-  }, []);
-
-  const handleChangeStartTimeStartEvent = useCallback(({ target: { value } }) => {
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { startTimeStartEvent: value } });
-  }, []);
-  const handleChangeEndTimeStartEvent = useCallback(({ target: { value } }) => {
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { endTimeStartEvent: value } });
-  }, []);
-  const handleChangeStartTimeEndEvent = useCallback(({ target: { value } }) => {
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { startTimeEndEvent: value } });
-  }, []);
-  const handleChangeEndTimeEndEvent = useCallback(({ target: { value } }) => {
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { endTimeEndEvent: value } });
-  }, []);
-
-  const handleChangeEndEvent = useCallback(({ target: { value } }) => {
-    const formattedDate = value.split('T')[0];
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { endEvent: formattedDate} });
-  }, []);
-
-  const handleChangeEventPlace = useCallback(({ target: { value } }) => {
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { eventPlace: value } });
-  }, []);
-
-  const handleChangeCountOfPerson = useCallback(({ target: { value } }) => {
-    const declinated = getDeclination(value);
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { countOfPerson: declinated } });
+    dispatch({ type: 'UPDATE_FORM_DATA', payload: { [name]: data } });
   }, [getDeclination]);
-
-  const handleChangeLogisticsCost = useCallback(({ target: { value } }) => {
-    dispatch({ type: 'UPDATE_FORM_DATA', payload: { logisticsCost: value } });
-  }, []);
 
   // Функция экспорта в PDF
   const exportPDF = useCallback(async () => {
-
     const pdf = new jsPDF("landscape", "mm", "a4");
     const lists = document.querySelectorAll(".list");
-
     for (const [index, list] of lists.entries()) {
       const canvas = await html2canvas(list, { scale: 2 });
       const imgData = canvas.toDataURL("image/png");
@@ -227,9 +260,8 @@ function App() {
       if (index !== 0) pdf.addPage();
       pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
     }
-
-    pdf.save("lists.pdf");
-    addToDb(state.formData, state.listsKp)
+    pdf.save(`КП № ${state.formData.kpNumber} от ${state.formData.kpDate}.pdf`);
+    // addToDb(state.formData, state.listsKp)
   }, [state.formData, state.listsKp]);
 
   // Функции добавления и удаления строк/списков
@@ -249,24 +281,10 @@ function App() {
     <div className='page'>
       <Form
         downloadPDF={exportPDF}
-        handleChangeKpNumber={handleChangeKpNumber}
-        handleChangeKpDate={handleChangeKpDate}
-        handleChangeContractNumber={handleChangeContractNumber}
-        handleChangeContractDate={handleChangeContractDate}
-        handleChangeStartEvent={handleChangeStartEvent}
-        handleChangeEndEvent={handleChangeEndEvent}
-        handleChangeEventPlace={handleChangeEventPlace}
-        handleChangeCountOfPerson={handleChangeCountOfPerson}
-        handleChangeLogisticsCost={handleChangeLogisticsCost}
         addRowInPdf={addRowInPdf}
-        handleLogisticsChange={handleLogisticsChange}
         handleManagerChange={handleManagerChange}
-        formData={formData}
-        handleChangeListTitle={handleChangeListTitle}
-        handleChangeStartTimeStartEvent={handleChangeStartTimeStartEvent}
-        handleChangeEndTimeStartEvent={handleChangeEndTimeStartEvent}
-        handleChangeStartTimeEndEvent={handleChangeStartTimeEndEvent}
-        handleChangeEndTimeEndEvent={handleChangeEndTimeEndEvent}
+        handleChangeInput={handleChangeInput}
+        searchKp={searchKp}
       />
       <div className="preview">
         <Header
@@ -284,8 +302,6 @@ function App() {
             key={item.id}
             startEvent={formatDate(formData.startEvent)}
             endEvent={formatDate(formData.endEvent)}
-            startTime={formData.startTime}
-            endTime={formData.endTime}
             eventPlace={formData.eventPlace}
             countOfPerson={formData.countOfPerson}
             list={item}
@@ -298,6 +314,7 @@ function App() {
             endTimeStartEvent={formData.endTimeStartEvent}
             startTimeEndEvent={formData.startTimeEndEvent}
             endTimeEndEvent={formData.endTimeEndEvent}
+            dispatch={dispatch}
           />
         ))}
         <Suspense fallback={<div>Загрузка Footer...</div>}>

@@ -61,6 +61,7 @@
     grid-template-columns: 50% repeat(3, 1fr);
     justify-items: end;
     align-items: end;
+    transition: background-color 0.3s ease;
 }
 
 .table__title {
@@ -71,8 +72,8 @@
 
 .table__line-container {
     display: flex;
-    gap: 30px;
-    align-items: end;
+    /* gap: 30px; */
+    /* align-items: end; */
     justify-self: start;
 }
 
@@ -124,6 +125,7 @@
 .button__list_delete {
     min-width: 144px;
 }
+
 
 /* @media (max-width: 768px) {
     .list__table {

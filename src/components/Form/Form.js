@@ -5,28 +5,58 @@ import ProductPopup from '../ProductPopup/ProductPopup';
 
 function Form({
   downloadPDF,
-  handleChangeKpNumber,
-  handleChangeKpDate,
-  handleChangeContractNumber,
-  handleChangeContractDate,
-  handleChangeStartEvent,
-  handleChangeEndEvent,
-  handleChangeEventPlace,
-  handleChangeCountOfPerson,
-  handleChangeLogisticsCost,
   addRowInPdf,
-  handleLogisticsChange,
   handleManagerChange,
-  formData,
-  handleChangeListTitle,
-  handleChangeStartTimeStartEvent,
-  handleChangeEndTimeStartEvent,
-  handleChangeEndTimeEndEvent,
-  handleChangeStartTimeEndEvent,
+  handleChangeInput,
+  searchKp
 }) {
 
   const [showPopup, setShowPopup] = useState(false);
   const [products, setProducts] = useState([]);
+  const [request, setReq] = useState('')
+  const [isValid, setIsValid] = useState(false)
+  const [formValues, setFormValues] = useState({});
+  const [errors, setErrors] = useState({});
+  
+  const handleInputChange2 = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+    console.log();
+    
+    validateForm()
+  }
+
+  const validateForm = () => {
+    let newErrors = {};
+  
+    if (!formValues.startEvent) {
+      newErrors.startEvent = "Введите дату начала";
+      setIsValid(false)
+    } else {
+      setIsValid(true)
+    }
+    if (!formValues.endDate) {
+      newErrors.endEvent = "Введите дату окончания";
+      setIsValid(false)
+    } else {
+      setIsValid(true)
+    }
+    if (formValues.startEvent && formValues.endEvent && formValues.startEvent > formValues.endEvent) {
+      newErrors.endEvent = "Дата окончания не может быть раньше даты начала";
+      setIsValid(false)
+    } else {
+      setIsValid(true)
+    }
+    setErrors(newErrors);
+  };
+
+  const handleSearchKp = () => {
+    searchKp(request)
+  }
+
+  const handleChangeSearchInput = (e) => {
+    setReq(e.target.value)
+  }
 
   // Универсальный обработчик изменений ввода
   const handleInputChange = useCallback((e) => {
@@ -69,15 +99,8 @@ function Form({
   }, []);
 
   // Сохранение строк товаров в списке КП
-  // const addRow = useCallback((e) => {
-  //   e.preventDefault();
-  //   addRowInPdf(products);
-  //   e.target.reset();
-  //   setProducts([]);
-  // }, [products, addRowInPdf]);
   const addRow = useCallback((e) => {
     e.preventDefault();
-
     // Разбиваем массив products на группы по 7 элементов
     const chunkSize = 7;
     for (let i = 0; i < products.length; i += chunkSize) {
@@ -92,67 +115,80 @@ function Form({
 
   return (
     <div className="form">
+      {/* <fieldset className="form__search">
+        <span>Поиск коммерческого предложения</span>
+        <div className="search__search-line">
+          <input type="text" name="request" className="search__input" placeholder="Введите номер коммерческого предложения" onChange={handleChangeSearchInput} autoComplete="off" required />
+          <button type="button" className="search__btn" onClick={handleSearchKp}></button>
+        </div>
+      </fieldset> */}
       <fieldset className="form__details">
         {/* Реквизиты КП */}
         <div className="form__detail">
           <h2 className="form__title">Реквизиты КП</h2>
-          <label htmlFor="kpNumber" className="label">№ КП</label>
-          <input
-            id="kpNumber"
-            className="input"
-            type="text"
-            placeholder="KP number"
-            name="kpNumber"
-            onChange={handleChangeKpNumber}
-            required
-          />
-          <label htmlFor="kpDate" className="label">Дата КП</label>
-          <input
-            id="kpDate"
-            type="date"
-            name="kpDate"
-            min="2000-01-01"
-            max="2030-12-31"
-            onChange={handleChangeKpDate}
-            required
-          />
-          <label htmlFor="contractNumber" className="label">№ договора</label>
-          <input
-            id="contractNumber"
-            className="input"
-            type="text"
-            placeholder="Contract number"
-            name="contractNumber"
-            onChange={handleChangeContractNumber}
-            required
-          />
-          <label htmlFor="contractDate" className="label">Дата договора</label>
-          <input
-            id="contractDate"
-            className="input"
-            type="date"
-            name="contractDate"
-            min="2000-01-01"
-            max="2030-12-31"
-            onChange={handleChangeContractDate}
-            required
-          />
+          <label htmlFor="kpNumber" className="label">№ КП
+            <input
+              id="kpNumber"
+              className="input"
+              type="text"
+              placeholder="KP number"
+              name="kpNumber"
+              onChange={handleChangeInput}
+              required
+            />
+          </label>
+          <label htmlFor="kpDate" className="label">Дата КП
+            <input
+              className="input"
+              id="kpDate"
+              type="date"
+              name="kpDate"
+              min="2000-01-01"
+              max="2030-12-31"
+              onChange={handleChangeInput}
+              required
+            />
+          </label>
+          <label htmlFor="contractNumber" className="label">№ договора
+            <input
+              id="contractNumber"
+              className="input"
+              type="text"
+              placeholder="Contract number"
+              name="contractNumber"
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+          <label htmlFor="contractDate" className="label">Дата договора
+            <input
+              id="contractDate"
+              className="input"
+              type="date"
+              name="contractDate"
+              min="2000-01-01"
+              max="2030-12-31"
+              onChange={handleChangeInput}
+              required
+            />
+          </label>
         </div>
         {/* Реквизиты КП */}
 
         {/* Общая информация по мероприятию */}
         <div className="form__detail">
           <h2 className="form__title">Общая информация по мероприятию</h2>
-          <label htmlFor="listTitle" className="label">Заголовок</label>
-          <input
-            id="listTitle"
-            className="input"
-            type="text"
-            placeholder="Заголовок"
-            name="listTitle"
-            onChange={handleChangeListTitle}
-            required
-          />
+          <label htmlFor="listTitle" className="label">Заголовок
+            <input
+              id="listTitle"
+              className="input"
+              type="text"
+              placeholder="Заголовок"
+              name="listTitle"
+              onChange={handleChangeInput}
+              required
+            />
+          </label>
           <label htmlFor="startEvent" className="label">Дата начала мероприятия
             <input
               id="startEvent"
@@ -161,7 +197,7 @@ function Form({
               name="startEvent"
               min="2000-01-01"
               max="2030-12-31"
-              onChange={handleChangeStartEvent}
+              onChange={handleInputChange}
               required
             />
             <div className="inputTime">
@@ -173,7 +209,7 @@ function Form({
                 name="startTimeStartEvent"
                 min="00:00"
                 max="23:59"
-                onChange={handleChangeStartTimeStartEvent}
+                onChange={handleChangeInput}
                 required
               />
               по
@@ -184,7 +220,7 @@ function Form({
                 name="endTimeStartEvent"
                 min="00:00"
                 max="23:59"
-                onChange={handleChangeEndTimeStartEvent}
+                onChange={handleChangeInput}
                 required
               />
             </div>
@@ -197,7 +233,7 @@ function Form({
               name="endEvent"
               min="2000-01-01T00:00"
               max="2030-12-31T23:59"
-              onChange={handleChangeEndEvent}
+              onChange={handleInputChange}
               required
             />
             <div className="inputTime">
@@ -209,7 +245,7 @@ function Form({
                 name="startTimeEndEvent"
                 min="00:00"
                 max="23:59"
-                onChange={handleChangeStartTimeEndEvent}
+                onChange={handleChangeInput}
                 required
               />
               по
@@ -220,31 +256,33 @@ function Form({
                 name="endTimeEndEvent"
                 min="00:00"
                 max="23:59"
-                onChange={handleChangeEndTimeEndEvent}
+                onChange={handleChangeInput}
                 required
               />
             </div>
           </label>
-          <label htmlFor="eventPlace" className="label">Место проведения</label>
-          <input
-            id="eventPlace"
-            className="input"
-            type="text"
-            placeholder="Место проведения"
-            name="eventPlace"
-            onChange={handleChangeEventPlace}
-            required
-          />
-          <label htmlFor="countOfPerson" className="label">Количество персон</label>
-          <input
-            id="countOfPerson"
-            className="input"
-            type="text"
-            placeholder="Количество персон"
-            name="countOfPerson"
-            onChange={handleChangeCountOfPerson}
-            required
-          />
+          <label htmlFor="eventPlace" className="label">Место проведения
+            <input
+              id="eventPlace"
+              className="input"
+              type="text"
+              placeholder="Место проведения"
+              name="eventPlace"
+              onChange={handleChangeInput}
+              required
+            />
+          </label>
+          <label htmlFor="countOfPerson" className="label">Количество персон
+            <input
+              id="countOfPerson"
+              className="input"
+              type="text"
+              placeholder="Количество персон"
+              name="countOfPerson"
+              onChange={handleChangeInput}
+              required
+            />
+          </label>
         </div>
         {/* Общая информация по мероприятию */}
 
@@ -257,9 +295,9 @@ function Form({
               <input
                 id="logisticTrue"
                 type="radio"
-                name="logistic"
+                name="isWithinMkad"
                 value="true"
-                onChange={handleLogisticsChange}
+                onChange={handleChangeInput}
                 required
               />
               <span className="radio-title">Да</span>
@@ -268,25 +306,26 @@ function Form({
               <input
                 id="logisticFalse"
                 type="radio"
-                name="logistic"
+                name="isWithinMkad"
                 value="false"
-                onChange={handleLogisticsChange}
+                onChange={handleChangeInput}
                 required
               />
               <span className="radio-title">Нет</span>
             </label>
           </div>
-          <label htmlFor="logisticsCost" className="label">Стоимость логистики</label>
-          <input
-            id="logisticsCost"
-            className="input"
-            type="number"
-            placeholder="Стоимость логистики"
-            name="logisticsCost"
-            onChange={handleChangeLogisticsCost}
-            min="0"
-            required
-          />
+          <label htmlFor="logisticsCost" className="label">Стоимость логистики
+            <input
+              id="logisticsCost"
+              className="input"
+              type="number"
+              placeholder="Стоимость логистики"
+              name="logisticsCost"
+              onChange={handleChangeInput}
+              min="0"
+              required
+            />
+          </label>
         </div>
         {/* Доставка */}
 
@@ -361,7 +400,7 @@ function Form({
           <button type="submit" className="save-button">Сохранить</button>
         </form>
       </fieldset >
-      <button onClick={downloadPDF} className="download-button">Скачать PDF</button>
+      <button type="button" onClick={downloadPDF} className="download-button">Скачать PDF</button>
     </div >
   );
 }

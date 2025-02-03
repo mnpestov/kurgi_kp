@@ -59,6 +59,17 @@ class Api {
         })
             .then(this._checkResponse);
     }
+    updateRow(row) {
+        return fetch(`${this._baseUrl}/row/update`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(row)
+        })
+            .then(this._checkResponse);
+    }
+
 }
 export const MainApi = new Api({
     baseUrl: 'http://localhost:3000',

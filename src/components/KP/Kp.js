@@ -1,12 +1,11 @@
 import React from "react";
 import './Kp.css';
-import logo from '../../images/logo.png'
-import Row from '../Row/Row'
+import logo from '../../images/logo.png';
+import Row from '../Row/Row';
 
-function Kp({ startEvent,
+function Kp({
+    startEvent,
     endEvent,
-    startTime,
-    endTime,
     eventPlace,
     countOfPerson,
     list,
@@ -19,15 +18,16 @@ function Kp({ startEvent,
     endTimeStartEvent,
     startTimeEndEvent,
     endTimeEndEvent,
+    dispatch
 }) {
 
     const totalCost = list.rows.map((item) => {
-        return item.countOfProduct * item.priceOfProduct
-    })
-        .reduce((partialSum, a) => partialSum + a, 0);
-    const deleteL = () => {
-        deleteList(id)
-    }
+        return item.countOfProduct * item.priceOfProduct;
+    }).reduce((partialSum, a) => partialSum + a, 0);
+
+    const handleDeleteList = () => {
+        deleteList(id);
+    };
 
     return (
         <>
@@ -44,26 +44,20 @@ function Kp({ startEvent,
                                     <div className="list__subtitle_time">
                                         <p className="list__subtitle list__subtitle_time_text">время мероприятия: </p>
                                         <p>
-                                        <span className="list__subtitle_time_text list__subtitle_text">{`${startEvent.slice(0, 5)} (${startTimeStartEvent} - ${endTimeStartEvent})`}</span>
-                                        <span className="list__subtitle_time_text list__subtitle_text"> {`\u2013`} </span> 
-                                        <span className="list__subtitle_time_text list__subtitle_text">{`${endEvent.slice(0, 5)} (${startTimeEndEvent} - ${endTimeEndEvent})`}</span>
+                                            <span className="list__subtitle_time_text list__subtitle_text">{`${startEvent.slice(0, 5)} (${startTimeStartEvent} - ${endTimeStartEvent})`}</span>
+                                            <span className="list__subtitle_time_text list__subtitle_text"> {`–`} </span>
+                                            <span className="list__subtitle_time_text list__subtitle_text">{`${endEvent.slice(0, 5)} (${startTimeEndEvent} - ${endTimeEndEvent})`}</span>
                                         </p>
-                                         
                                     </div>
-
                                 </th>
-                                <th className="table__title">
-                                    Количество, шт
-                                </th>
-                                <th className="table__title">
-                                    Стоимость
-                                </th>
-                                <th className="table__title">
-                                    Цена, руб
-                                </th>
+                                <th className="table__title">Количество, шт</th>
+                                <th className="table__title">Стоимость</th>
+                                <th className="table__title">Цена, руб</th>
                             </tr>
                         </thead>
-                        {list.rows.map((item, index) => (<Row key={index} data={item} index={index} deleteRow={deleteRow} listId={list.id} GetPrice={GetPrice} />))}
+                        {list.rows.map((item, index) => (
+                            <Row key={index} data={item} index={index} deleteRow={deleteRow} listId={list.id} dispatch={dispatch} />
+                        ))}
                     </table>
                 </div>
                 <div className="table__subtitle">
@@ -72,16 +66,12 @@ function Kp({ startEvent,
                             <p className="list__footnote">*В стоимость включены все расходники.</p>
                         </div>
                         <div className="list__total">
-                            {/* <p className="list__subtotla">{`Сумма: ${GetPrice(totalCost)}`}</p> */}
                             <p className="list__totla-cost">{`Итоговая сумма: ${GetPrice(parseInt(totalCost))}`}</p>
-                            {/* <p className="list__totla-cost">{`Итого по безналичному расчёту: ${GetPrice(Math.round((parseInt(totalCost)) * 1.07))}`}</p> */}
-
                         </div>
                     </div>
                 </div>
             </div>
-            <button type="button" className="list-button  button__list_delete remove-button" onClick={deleteL}>Удалить лист</button>
-            {/* <button type="button" className="list-button  button__list_delete edit-button">Редактировать лист</button> */}
+            <button type="button" className="list-button button__list_delete remove-button" onClick={handleDeleteList}>Удалить лист</button>
         </>
     );
 }
